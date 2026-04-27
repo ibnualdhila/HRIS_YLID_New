@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "hris-personalinformation",
+  "private_key_id": "912324457b412a421d091cbef7f21618969208cb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCd9652pWiQirFI\nn4BmHx/EmllOw13EORTRjNWsPl9i/+/SKw3HDsRS/xXNls6+j2Vb7GhOD2UB+q8F\nuioPbGemrjzRUen6610+WuNZ9EtS2fKXeAZTJE183QfkZp5gfQlbsOC4aBIicLkw\nhWeiL8sIy43MadNeQ11uObT9S2LDnh3AyLAAwkVjSXDJo4ZJ6S8t1nZ28S6ir3+a\nZwSagcGAH5g6ZgggI6Wrskr1UPdQ7uDqu5uOvKGNPPmBtwmCVAHs4s8HWtTBMOrZ\ngOtcUja6qN7yEbe92QphtUDgFUCNyP3eIjYNnMHPm89voQs+e8Ce+e6gRZkPxOFz\nLGvupIXLAgMBAAECggEAFKNLeaMXm6wQXbFqUtflzHJGkQno114xGvAq6ajGc9vb\nMa/qn2M4VrLj3tXBPK07AVJMDZ1o8A7Cd12V6X5GC8U/cIYiqw5n7WHDdTj7mZ9G\n2Jos6AeEpiJcdG8hvu+8XWx+QillQSGirYpS+qIC2oB5jfIU1CpkllDXarDtfiqW\nxALmqmAKGqOg3Xdl4lHYm4ahPAXPb2Nms7mRif5lgYWPx1QIOMdhaX7zVUPAMutK\nTFBP/JYPrvBM0z9Azn/9WQrSIuHqB9Z+2xX5XKz6vsplyG7QxMmn3+O7UvjwYZ5j\nMnUj2oWUQbcsU8mVYQ/nM9AuFUoghMICQelykK85UQKBgQDQ7FafyELoGjsyYj2c\nfQpZtpKsuK73sHIO0/T2QncXJkpF79EvRnZ3mgN0z5XL7LrMt8dSTRZKMwfapNP9\n0kwmg+S87I9hcp18g1+4Csc0JifJGS4kmKX9xVSUbZtk9ndW9VWMgHXDBN9yKrdk\nfOF1cTibReSU9Yus+jNk1Yay+wKBgQDBj/tdN51GIhw59MHv1BBxgy/44mPlp6v/\nzt+6QE3GEJGdv+poDp1So6OPS5sLTLzwoElYQPnBm7yQoxHlT0igtmad+x7IDZMi\n3TA9v7DKMAJvokkXOdZCB2w5IruJBfoburM6mfYISTh0KbtykDDyWjVgZ6SRiwBm\nxR1FXR9/cQKBgCaJwfzdWwInfI3xsz2/jv43gFzeAGBuKsvzazdV0VPy2zaFY0fe\nLpInVcXhWNdyBo8mw1y6HYd4XFWHnBcxCJz+LV5wII6wLr6+GRUA3/gNpb8hpvJX\nOh9SnCR5B3YbRK5EuRAezho4NuN/X67onkokpXV28hBMLwSsbniGLr+rAoGAE3su\nTV9/kMN2G88qhbzOOt59QYtnioGpqgFkOxalvT2Fql7adMajxuF5YL63SBfdHErF\nlwBTIs1N2TDQaEfmg2ZYRaY0nuXe3S9t34kfffn/BMVMne3QRq0Ak2+PeGcFmSzd\nRRSh0ousBuT8XLdudbXmkWFdCtj2nWFRZN3OgcECgYAUcuvGEB+ox8VAb9x92WDe\nQvMmu+Oce1jF91ItekJ067vXn1jfl0UXBtBXYCD577Kxfq8e8y4CQlhp0GlG3mGH\nVHCDllNeOSNz8X/s2CCozWnc72xxLJhBAUWcL/fugSFPDyVeOEM6OH9/+6jGUzt6\nlyLPCtuXx9p3vkjegHRvHQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "hris-ylid@hris-personalinformation.iam.gserviceaccount.com",
+  "client_id": "115459350618833815948",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/hris-ylid%40hris-personalinformation.iam.gserviceaccount.com"
+}

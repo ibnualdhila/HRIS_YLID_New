@@ -1,0 +1,494 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Layout.master.cs" Inherits="hris_ylid.Layout" %>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HRIS - YLID | <%: Page.Title %> </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <!-- Favicon icon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="./plugins/toastr/css/toastr.min.css" rel="stylesheet">
+    <link href="./plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <!-- Pignose Calender -->
+    <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Page plugins css -->
+    <link href="./plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Color picker plugins css -->
+    <link href="./plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
+    <!-- Date picker plugins css -->
+    <link href="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Daterange picker plugins css -->
+    <link href="./plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="./plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Dropzone Css -->
+    <script src="plugins/chart.js/Chart.bundle.min.js"></script>
+
+    <!-- Date range Plugin JavaScript -->
+    <script src="./plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="./plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="./plugins/moment/moment.js"></script>
+    <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+    <link href="plugins/dropzone/dropzone.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link href="vendors/sweetalert.css" rel="stylesheet" />
+    <link href="plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
+
+    <%--datatable--%>
+    <link href="plugins/script_03122025/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="plugins/script_03122025/1.13.6/Datatable/jquery.dataTables.min.js"></script>
+    <script src="plugins/script_03122025/3.7.1/jquery-3.7.1.min.js"></script>
+
+
+
+
+</head>
+
+<body>
+    <form id="form1" runat="server">
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+
+        <!--*******************
+		Preloader start
+	********************-->
+
+        <div id="preloader">
+            <div class="loader">
+                <svg class="circular" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+                </svg>
+            </div>
+        </div>
+
+        <div hidden="hidden">
+            <asp:Label ID="lblNamaBranch" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblLvlUser" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblFullname" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lbNIK" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotif" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblKodeUser" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lbiduser" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lbltitle" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifPurchase" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifRequestItem" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifRequestOnsystem" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifRequestOnsystemApproveIT" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifRequestOnsystemDeveloper" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifRequestAcces" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifAcceptance" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifApprovalAcceptance" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifApprovalAccessConfig" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblnotifITHelpdesk" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblSection" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblDivision" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblPosition" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblLocation" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblOid" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblOidEmployees" runat="server" Text=""></asp:Label>
+            <asp:Label ID="lblGroupChart" runat="server" Text=""></asp:Label>
+        </div>
+        <!--*******************
+		Preloader end
+	********************-->
+
+
+        <!--**********************************
+		Main wrapper start
+	***********************************-->
+        <div id="main-wrapper">
+
+            <!--**********************************
+			Nav header start
+		***********************************-->
+            <div class="nav-header">
+                <div class="brand-logo text-center">
+                    <a href="#">
+                        <b class="logo-abbr">
+                            <img src="images/logo.png" alt="">
+                        </b>
+                        <span class="logo-compact">
+                            <img src="images/logo-compact.png" alt=""></span>
+                        <span class="brand-title">
+                            <img src="images/logo-text.png" alt="">
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <!--**********************************
+			Nav header end 
+		***********************************-->
+
+            <!--**********************************
+			Header start
+		***********************************-->
+            <div class="header">
+                <div class="header-content clearfix">
+
+                    <div class="nav-control">
+                        <div class="hamburger">
+                            <span class="toggle-icon"><i class="icon-menu"></i></span>
+
+                        </div>
+                    </div>
+
+                    <div class="header-left">
+                        <div class="input-group icons">
+                            <div class="input-group-prepend">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header-right">
+                        <ul class="clearfix">
+                            <%--<li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+								<i class="mdi mdi-bell-outline"></i>
+								<span runat="server" id="numberNotif" class="badge badge-pill gradient-2 badge-primary"><asp:Label ID="txtNotif" runat="server"></asp:Label></span>
+							</a>
+							<div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
+								<div class="dropdown-content-heading d-flex justify-content-between">
+									<span class=""><asp:Label ID="lblShowTotalNotif" Text="0" runat="server"></asp:Label> New Notifications</span>  
+									
+								</div>
+								
+							</div>
+						</li>--%>
+                            <li class="icons dropdown d-none d-md-flex">
+
+                                <div class="header-left">
+                                    <div class="input-group icons">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-transparent border-0 pr-2 pr-sm-3" id="basic-addon1">
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--**********************************
+			Header end ti-comment-alt
+		***********************************-->
+
+            <!--**********************************
+			Sidebar start
+		***********************************-->
+            <div class="nk-sidebar">
+                <div class="nk-nav-scroll">
+                    <div>
+                        <br />
+                    </div>
+                    <div id="mainnav-profile" class="mainnav-profile">
+                        <div class="profile-wrap text-center">
+                            <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
+                                <span class="nav-text">
+                                    <img src="images/img.png" height="40" width="40" alt="">
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                    </div>
+                    <div class="mainnav-profile">
+                        <div class="profile-wrap text-center">
+                            <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
+                                <span class="nav-text">
+                                    <label runat="server" id="txtFullname" style="color: white;"></label>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mainnav-profile">
+                        <div class="profile-wrap text-center">
+                            <a runat="server" href="login.aspx"><i class="fa fa-sign-out menu-icon" aria-hidden="true"></i><span>&nbsp;Logout</span></a>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                    </div>
+                    <ul class="metismenu" id="menu">
+                        <%--<li class="nav-label">Dashboard</li>--%>
+                        <li id="home" runat="server">
+                            <a class="nav-link" href="index.aspx">
+                                <i class="fa fa-dashboard menu-icon"></i>
+                                <span>Dashboard</span></a>
+                        </li>
+                        <li runat="server" id="masterdata" class="mega-menu mega-menu-sm">
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="fa fa-database menu-icon"></i><span class="nav-text">Master Data</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li runat="server" id="administrator">
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <span class="nav-text">Administrator</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li runat="server" id="registration"><a href="registration.aspx"><span class="nav-text">Membership Registration</span></a></li>
+                                        <li runat="server" id="registration_group"><a href="registration_group.aspx"><span class="nav-text">Group Registration</span></a></li>
+                                        <li runat="server" id="registration_module"><a href="registration_module.aspx"><span class="nav-text">Module Registration</span></a></li>
+                                        <li runat="server" id="organization_chart_group"><a href="organization_chart_group.aspx"><span class="nav-text">Organization Chart Group</span></a></li>
+                                        <li runat="server" id="organization_chart_head"><a href="organization_chart_head.aspx"><span class="nav-text">Organization Chart Head</span></a></li>
+                                    </ul>
+                                </li>
+                                <li runat="server" id="master_organization">
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <span class="nav-text">Organization</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li runat="server" id="location"><a href="location.aspx"><span class="nav-text">Location</span></a></li>
+                                        <li runat="server" id="division"><a href="division.aspx"><span class="nav-text">Division</span></a></li>
+                                        <li runat="server" id="position"><a href="title.aspx"><span class="nav-text">Title</span></a></li>
+                                        <li runat="server" id="section"><a href="section.aspx"><span class="nav-text">Section</span></a></li>
+                                        <li runat="server" id="subsection"><a href="subsection.aspx"><span class="nav-text">Subsection</span></a></li>
+                                    </ul>
+                                </li>
+                                <li runat="server" id="master_hr_general">
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <span class="nav-text">HR General</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li runat="server" id="employees"><a href="employeess.aspx"><span class="nav-text">Employee</span></a></li>
+                                        <li runat="server" id="data_institution"><a href="institution_registration.aspx"><span class="nav-text">Institution Registration</span></a></li>
+                                        <%--<li runat="server" id="vendor_general"><a href="vendor_registration.aspx"><span class="nav-text">Vendor Registration</span></a></li>--%>
+                                    </ul>
+                                </li>
+                                <li runat="server" id="master_hr_training">
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <span class="nav-text">HR Training</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li runat="server" id="data_vendor"><a href="vendor_registration.aspx"><span class="nav-text">Vendor Registration</span></a></li>
+                                        <li runat="server" id="data_training"><a href="training_registration.aspx"><span class="nav-text">Training Registration</span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li runat="server" id="recruitment">
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="fa fa-binoculars menu-icon"></i><span class="nav-text">Recruitment</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li runat="server" id="personal_info"><a href="personal_information.aspx"><span class="nav-text">Personnel Information</span></a></li>
+                                <%--<li runat="server" id="Li1"><a href="Test.aspx"><span class="nav-text">Test</span></a></li>--%>
+                            </ul>
+                        </li>
+                        <li runat="server" id="hr_general" class="mega-menu mega-menu-sm">
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="fa fa-users menu-icon"></i><span class="nav-text">HR Agreement</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li runat="server" id="company_document"><a href="company_agreement.aspx"><span class="nav-text">Company Agreement</span></a></li>
+                                <li runat="server" id="employee_agreement"><a href="employee_agreement.aspx"><span class="nav-text">Employment Agreement</span></a></li>
+                            </ul>
+                        </li>
+                        <li runat="server" id="hr_training" class="mega-menu mega-menu-sm">
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="fa fa-graduation-cap menu-icon"></i><span class="nav-text">HR Training</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li runat="server" id="individual_training"><a href="individual_training.aspx"><span class="nav-text">Individual Training</span></a></li>
+                                <li runat="server" id="training_record"><a href="training_record.aspx"><span class="nav-text">Training Record</span></a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!--**********************************
+			Sidebar end
+		***********************************-->
+
+            <!--**********************************
+			Content body start
+		***********************************-->
+            <div class="content-body">
+                <div class="page-content">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+            <!--**********************************
+			Content body end
+		***********************************-->
+
+
+            <!--**********************************
+			Footer start
+		***********************************-->
+            <div class="footer">
+                <div class="copyright">
+                    <p>Copyright &copy; Designed & Developed by IT Develop Yusen Jakarta 2022</p>
+                </div>
+            </div>
+            <!--**********************************
+			Footer end
+		***********************************-->
+        </div>
+
+        <!--**********************************
+		Main wrapper end
+	***********************************-->
+
+        <!--**********************************
+		Scripts
+	***********************************-->
+        <script src="plugins/common/common.min.js"></script>
+        <script src="js/custom.min.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/gleek.js"></script>
+        <script src="js/styleSwitcher.js"></script>
+
+        <!-- PNotify -->
+        <link href="vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+        <link href="vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+        <link href="vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+        <script src="vendors/pnotify/dist/pnotify.js"></script>
+        <script src="vendors/pnotify/dist/pnotify.buttons.js"></script>
+        <script src="vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+        <!-- Chartjs -->
+        <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+        <!-- Circle progress -->
+        <script src="./plugins/circle-progress/circle-progress.min.js"></script>
+        <!-- Datamap -->
+        <script src="./plugins/d3v3/index.js"></script>
+        <script src="./plugins/topojson/topojson.min.js"></script>
+        <script src="./plugins/datamaps/datamaps.world.min.js"></script>
+        <!-- Morrisjs -->
+        <script src="./plugins/raphael/raphael.min.js"></script>
+        <script src="./plugins/morris/morris.min.js"></script>
+        <!-- Pignose Calender -->
+        <script src="./plugins/moment/moment.min.js"></script>
+        <script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+        <!-- ChartistJS -->
+        <script src="./plugins/chartist/js/chartist.min.js"></script>
+        <script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+
+        <script src="./plugins/tables/js/jquery.dataTables.min.js"></script>
+        <script src="./plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+        <script src="./plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+
+        <!-- Toastr -->
+        <script src="./plugins/toastr/js/toastr.min.js"></script>
+        <script src="./plugins/toastr/js/toastr.init.js"></script>
+        <script src="./js/dashboard/dashboard-1.js"></script>
+
+        <script src="./plugins/moment/moment.js"></script>
+        <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+        <!-- Clock Plugin JavaScript -->
+        <script src="./plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+        <!-- Color Picker Plugin JavaScript -->
+        <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+        <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+        <script src="./plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+        <!-- Date Picker Plugin JavaScript -->
+        <script src="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+        <!-- Date range Plugin JavaScript -->
+        <script src="./plugins/timepicker/bootstrap-timepicker.min.js"></script>
+        <script src="./plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="./plugins/moment/moment.js"></script>
+        <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+        <script src="./js/plugins-init/form-pickers-init.js"></script>
+        <!-- Dropzone Plugin Js -->
+        <script src="../../plugins/dropzone/dropzone.js"></script>
+
+        <!-- Datatables -->
+
+        <link href="plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <script src="plugins/tables/js/jquery.dataTables.min.js"></script>
+        <script src="plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+        <script src="plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+
+        <script src="plugins/tables/js/datatable/dataTables.fixedColumns.min.js"></script>
+        <script src="plugins/tables/js/datatable/dataTables.fixedColumns.js"></script>
+        <script src="plugins/fullcalendar/js/fullcalendar.min.js"></script>
+        <script src="js/plugins-init/fullcalendar-init.js"></script>
+
+
+        <script>
+            (function ($) {
+                "use strict"
+
+                new quixSettings({
+                    version: "light", //2 options "light" and "dark"
+                    layout: "vertical", //2 options, "vertical" and "horizontal"
+                    navheaderBg: "color_1", //have 10 options, "color_1" to "color_10"
+                    headerBg: "color_1", //have 10 options, "color_1" to "color_10"
+                    sidebarStyle: "vertical", //defines how sidebar should look like, options are: "full", "compact", "mini" and "overlay". If layout is "horizontal", sidebarStyle won't take "overlay" argument anymore, this will turn into "full" automatically!
+                    sidebarBg: "color_1", //have 10 options, "color_1" to "color_10"
+                    sidebarPosition: "fixed", //have two options, "static" and "fixed"
+                    headerPosition: "static", //have two options, "static" and "fixed"
+                    containerLayout: "wide",  //"boxed" and  "wide". If layout "vertical" and containerLayout "boxed", sidebarStyle will automatically turn into "overlay".
+                    direction: "ltr" //"ltr" = Left to Right; "rtl" = Right to Left
+                });
+
+
+            })(jQuery);
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#date').bootstrapMaterialDatePicker
+                    ({
+                        time: false,
+                        clearButton: true
+                    });
+                $('#time').bootstrapMaterialDatePicker
+                    ({
+                        date: false,
+                        shortTime: false,
+                        format: 'HH:mm'
+                    });
+                $('#date-format').bootstrapMaterialDatePicker
+                    ({
+                        format: 'dddd DD MMMM YYYY - HH:mm'
+                    });
+                $('#date-fr').bootstrapMaterialDatePicker
+                    ({
+                        format: 'DD/MM/YYYY HH:mm',
+                        lang: 'fr',
+                        weekStart: 1,
+                        cancelText: 'ANNULER',
+                        nowButton: true,
+                        switchOnClick: true
+                    });
+
+                $('#date-end').bootstrapMaterialDatePicker
+                    ({
+                        weekStart: 0, format: 'DD/MM/YYYY HH:mm'
+                    });
+                $('#date-start').bootstrapMaterialDatePicker
+                    ({
+                        weekStart: 0, format: 'DD/MM/YYYY HH:mm', shortTime: true
+                    }).on('change', function (e, date) {
+                        $('#date-end').bootstrapMaterialDatePicker('setMinDate', date);
+                    });
+                $.material.init()
+            });
+        </script>
+
+        <script src="vendors/sweetalert.js"></script>
+        <script src="vendors/sweetalert.min.js"></script>
+    </form>
+</body>
+
+</html>
