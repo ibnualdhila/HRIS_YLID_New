@@ -55,20 +55,232 @@
             color: white;
         }
 
-            .buttonColor:hover {
-                background-color: #ff6d10;
-                color: white;
-            }
+        .buttonColor:hover {
+            background-color: #ff6d10;
+            color: white;
+        }
 
         .buttonColorGridview {
             background-color: #ff6d10;
             color: white;
         }
 
-            .buttonColorGridview:hover {
-                background-color: #06183d;
-                color: white;
-            }
+        .buttonColorGridview:hover {
+            background-color: #06183d;
+            color: white;
+        }
+
+
+        .dataTables_filter input {
+            border: 3px solid darkblue !important;
+            background-color: #f0f8ff !important;
+            padding: 6px 10px !important;
+            font-weight: bold !important;
+            height:20px;
+        }
+     
+        /* Tambahan efek saat fokus */
+        .dataTables_filter input:focus {
+            outline: none;
+            border-color: midnightblue !important; /* biru terang */
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        }
+
+        /* Styling dropdown "Show entries" */
+    .dataTables_length select {
+        border: 3px solid darkblue !important;
+        background-color: #f0f8ff !important;
+        padding: 4px 8px !important;
+        font-weight: bold !important;
+        height: 32px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Efek saat fokus */
+    .dataTables_length select:focus {
+        outline: none;
+        border-color: midnightblue !important;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+    }
+
+
+    .dataTables_filter input,
+    .dataTables_length select {
+        height: 32px;
+    }
+
+
+    /* Card container */
+    .upload-card {
+        border: 1px solid #eee;
+        padding: 20px;
+        border-radius: 10px;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    /* Legend */
+    .upload-card legend {
+        font-size: 20px;
+        font-weight: bold;
+        padding: 0 10px;
+        color: #06183d;
+    }
+
+    /* Download link */
+    .link-download {
+        color: #06183d;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .link-download:hover {
+        text-decoration: underline;
+    }
+
+    /* Upload box */
+    .upload-box {
+        display: block;
+        border: 2px dashed #ff6d10;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        cursor: pointer;
+        background: #f8fbff;
+        transition: 0.3s;
+    }
+
+    .upload-box:hover {
+        background: #eef6ff;
+        border-color: #0056b3;
+    }
+
+    /* Hide default input */
+    .file-input {
+        display: none;
+    }
+
+    /* Upload content */
+    .upload-content i {
+        font-size: 40px;
+        color: #06183d;
+        margin-bottom: 10px;
+    }
+
+    .upload-content p {
+        margin: 5px 0;
+        font-weight: 500;
+    }
+
+    .file-name {
+        font-size: 13px;
+        color: #666;
+    }
+
+    /* Button */
+    .btn-upload {
+        margin-top: 20px;
+        background: linear-gradient(135deg, #06183d, #0a58ca);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-upload:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Message */
+    .upload-message {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+
+    .excel-icon {
+        color: #06183d; /* biru modern */
+        font-size: 20px;
+        margin-right: 8px;
+    }
+    .file-error{
+        color:red;
+    }
+
+    .upload-box.dragover {
+        border-color: #0d6efd;
+        background-color: #eef6ff;
+    }
+
+    .filters input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+        border: 3px solid #ff6d10 !important;
+        background-color: #f0f8ff !important;
+        font-weight: bold !important;
+    }
+
+    table.dataTable thead .filters th {
+        padding: 4px;
+    }
+
+
+    /* TANGGAL FILTER */
+    div.dataTables_length {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .join-filter-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+    }
+
+    .join-filter-input {
+        width: 160px !important;
+        border-radius: 8px;
+        border: 3px solid darkblue !important;
+        background-color: #f0f8ff !important;
+    }
+
+    .join-filter-input:focus {
+        border-color: #06183d;
+        box-shadow: 0 0 0 0.1rem rgba(6,24,61,.15);
+    }
+
+    .filters input {
+        width: 100%;
+        border: 5px solid #ff6a00;
+        padding: 5px 8px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+    .btnsecondary{
+        background-color: #06183d;
+        color: white;
+
+    }
+
+     .dataTables_scrollBody table {
+            position: relative;
+            z-index: 1;
+        }
+
+    .dataTables_scrollHead {
+        z-index: 0 !important;
+    }
+
     </style>
     <script>
         function showSucces() {
@@ -147,20 +359,48 @@
     </script>
     <script type="text/javascript">
         function UploadSuccess() {
-            swal({
-                title: 'Upload Success',
-                text: 'Data Employee Successfully Uploaded',
-                timer: '2000',
-                type: 'success',
-                showConfirmButton: false,
-                html: true
-            },
-                function redirect() {
-                    window.location.href = 'employeess.aspx';
+            //swal({
+            //    title: 'Upload Success',
+            //    text: 'Data Employee Successfully Uploaded',
+            //    timer: '2000',
+            //    type: 'success',
+            //    showConfirmButton: false,
+            //    html: true
+            //},
+            //    function redirect() {
+            //        window.location.href = 'employeess.aspx';
+            //    }
+            //);
+            Toastify({
+                text: message,
+                duration: 4000,
+                gravity: "top",
+                position: "center",
+                close: true,
+                escapeMarkup: false,
+                style: {
+                    background: " #50C878"
                 }
-            );
+            }).showToast();
+
         }
     </script>
+    <script>
+       
+        function showErrorToast(message) {
+            Toastify({
+                text: message,
+                duration: 4000,
+                gravity: "top",
+                position: "center",
+                close: true,
+                escapeMarkup: false,
+                style: {
+                    background: "#dc3545"
+                }
+            }).showToast();
+        }
+ </script>
     <script type="text/javascript">
         function SelectPosition() {
             swal('Save Failed!', 'Position not yet selected, please try again', 'error');
@@ -237,7 +477,94 @@
             swal('Save Failed!', 'No data is saved', 'error');
         }
     </script>
+   <script>
+       function validateUpload() {
+           debugger
+           var fileInput = document.querySelector("input[type='file']");
+           var errorEl = document.getElementById("fileError");
+           var btnUpload = document.querySelector("input[id*='btnUpload']");
 
+           errorEl.textContent = "";
+
+           if (!fileInput || fileInput.files.length === 0) {
+               errorEl.textContent = "⚠️ Please Choose File Before Upload!";
+               return false;
+           }
+
+           var file = fileInput.files[0];
+           var allowed = ['xls', 'xlsx'];
+           var ext = file.name.split('.').pop().toLowerCase();
+
+           if (!allowed.includes(ext)) {
+               errorEl.textContent = "⚠️ Only Excel files(.xls / .xlsx) are allowed!";
+               return false;
+           }
+
+           // lanjut klik ASP button
+           showLoading('Import Data Employee...');
+           btnUpload.click();
+       }
+   </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const fileInput = document.querySelector(".file-input");
+            const fileName = document.querySelector(".file-name");
+            const errorEl = document.getElementById("fileError");
+
+            fileInput.addEventListener("change", function () {
+                if (fileInput.files.length > 0) {
+
+                    fileName.textContent = fileInput.files[0].name;
+                    errorEl.textContent = "";
+
+                } else {
+                    fileName.textContent = "File Not Found";
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const uploadBox = document.querySelector(".upload-box");
+            const fileInput = document.querySelector(".file-input");
+            const fileName = document.querySelector(".file-name");
+            const errorEl = document.getElementById("fileError");
+
+            uploadBox.addEventListener("dragover", function (e) {
+                e.preventDefault();
+                uploadBox.classList.add("dragover");
+            });
+
+            uploadBox.addEventListener("dragleave", function () {
+                uploadBox.classList.remove("dragover");
+            });
+
+            uploadBox.addEventListener("drop", function (e) {
+                e.preventDefault();
+                uploadBox.classList.remove("dragover");
+
+                const files = e.dataTransfer.files;
+
+                if (files.length > 0) {
+          
+                    const dt = new DataTransfer();
+                    dt.items.add(files[0]);
+                    fileInput.files = dt.files;
+
+                    fileName.textContent = files[0].name;
+
+                    errorEl.textContent = "";
+                }
+            });
+
+            fileInput.addEventListener("change", function () {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                }
+            });
+        });
+    </script>
     <script type="text/javascript">
         function fillEmergencyContactFields(oid, name, address, relationship, phone) {
             if (!oid) {
@@ -275,6 +602,7 @@
         var ModifiedDate = '<%= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") %>';
     </script>
 
+  
     <style>
         .page-head {
             background-color: #06183d; /* Change this to your desired background color */
@@ -323,7 +651,6 @@
         <asp:HiddenField ID="lblOK" runat="server" />
         <asp:HiddenField ID="lblCode" runat="server" />
         <asp:HiddenField ID="lblFileName" runat="server" />
-
     </div>
 
     <asp:HiddenField ID="hlbID" runat="server" />
@@ -334,7 +661,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class='col-sm-12'>
-                                <fieldset class="scheduler-border">
+<%--                                <fieldset class="scheduler-border">
                                     <legend class="scheduler-border">Import Data</legend>
                                     <div class='col-sm-12'>
                                         <div class="row">
@@ -354,6 +681,45 @@
                                                 <asp:Button runat="server" Style="display: none;" ID="btnUpload" OnClick="btnUpload_Click"></asp:Button>
                                             </div>
                                         </div>
+                                    </div>
+                                </fieldset>--%>
+                                <fieldset class="upload-card">
+                                    <legend>Import Data Employee</legend>
+
+                                    <div class="upload-container">
+                                        <h4>
+                                            <i class="fa fa-file-excel-o excel-icon"></i>
+                                            <asp:LinkButton runat="server" CssClass="link-download"
+                                                OnClick="DownloadTemplete_Click">
+                                                Download Template
+                                            </asp:LinkButton>
+                                        </h4>
+
+                                        <!-- Custom Upload Area -->
+                                        <label class="upload-box">
+                                            <asp:FileUpload ID="FileUpload" AllowMultiple="true" runat="server" CssClass="file-input" />
+                                            <div class="upload-content">
+                                                <i class="fa fa-cloud-upload"></i>
+                                                <p>Drag & drop file or klik to upload</p>
+                                                <span class="file-name">there are no files yet</span>
+                                            </div>
+                                        </label>
+
+                                        <span id="fileError" class="file-error"></span>
+                                        <asp:Label ID="lblMessage" runat="server" CssClass="upload-message"></asp:Label>
+
+                                       <button type="button"
+                                            onclick="return validateUpload()"
+                                            class="btn-upload">
+                                            Upload File <i class="fa fa-upload"></i>
+                                        </button>
+
+                                        <asp:Button runat="server" ID="btnUpload" OnClick="btnUpload_Click" Style="display:none;" />
+<%--                                        <button type="button" onclick="<%=btnUpload.ClientID %>.click()" class="btn-upload">
+                                            Upload File <i class="fa fa-upload"></i>
+                                        </button>
+
+                                        <asp:Button runat="server" Style="display:none;" ID="btnUpload" OnClick="btnUpload_Click" />--%>
                                     </div>
                                 </fieldset>
                             </div>
@@ -387,7 +753,9 @@
                                         </div>
                                         <div class='col-sm-12'>
                                             <div class="table-responsive">
-                                                <asp:GridView ID="TableEmployees" runat="server" CssClass="table table-striped row-border order-column table-bordered zero-configuration text-nowrap grid" AutoGenerateColumns="False"
+                                                <asp:GridView ID="TableEmployees" runat="server"
+                                                    CssClass="table table-striped row-border order-column table-bordered text-nowrap grid employeeTable"
+                                                    AutoGenerateColumns="False"
                                                     ShowHeaderWhenEmpty="true" EmptyDataText="No Record Found" OnRowDataBound="TableEmployees_RowDataBound" OnRowCommand="TableEmployees_RowCommand"
                                                     OnSelectedIndexChanged="TableEmployees_SelectedIndexChanged" DataKeyNames="id">
                                                     <HeaderStyle HorizontalAlign="Justify" VerticalAlign="Top" BackColor="#06183d" ForeColor="White" />
@@ -408,8 +776,8 @@
                                                                 <asp:Label runat="server" Text="Edit"></asp:Label>
                                                             </HeaderTemplate>--%>
                                                             <ItemTemplate>
-                                                                <asp:LinkButton runat="server" ID="btnEdit" CommandName="Ubah" CommandArgument="<%# Container.DataItemIndex %>" CssClass="btn buttonColorGridview"
-                                                                    OnClick="btnEdit_Click" ToolTip="Click to edit">
+                                                                <asp:LinkButton runat="server" ID="btnEdit" CommandName="Ubah"  CommandArgument="<%# Container.DataItemIndex %>" CssClass="btn buttonColorGridview"
+                                                                    OnClick="btnEdit_Click" OnClientClick="return true;" ToolTip="Click to edit" CausesValidation="false">
                                                                 <i class="fa fa-eye"></i> 
                                                                 </asp:LinkButton>
                                                             </ItemTemplate>
@@ -2358,17 +2726,230 @@
         });
     </script>
 
+   
+<%--    <script>
+        $(document).ready(function () {
+
+            var tableId = '#<%= TableEmployees.ClientID %>';
+
+        // clone header filter
+        $(tableId + ' thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo(tableId + ' thead');
+
+        // init datatable
+        var table = $(tableId).DataTable({
+
+           
+            dom: 'ltip',
+            scrollY: "500px",
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            autoWidth: false,
+
+            orderCellsTop: true,
+            fixedHeader: true,
+
+            initComplete: function () {
+
+                var api = this.api();
+
+                api.columns().eq(0).each(function (colIdx) {
+
+                    // skip kolom Action
+                    if (colIdx == 0) {
+                        $('.filters th').eq(colIdx).html('');
+                        return;
+                    }
+
+                    var cell = $('.filters th').eq(colIdx);
+
+                    $(cell).html(
+                        '<input type="text" placeholder="Search" style="width:100%;" />'
+                    );
+
+                    $('input', cell)
+                        .off('keyup change')
+                        .on('keyup change', function (e) {
+
+                            e.stopPropagation();
+
+                            api.column(colIdx)
+                                .search(this.value)
+                                .draw();
+                        });
+                });
+
+
+            }
+        });
+
+    });
+    </script>--%>
+
+
     <script>
         $(document).ready(function () {
-            // Initialize DataTable
-            var table = $('#<%= TableEmployees.ClientID %>').DataTable({
-                scrollX: true,
-                scrollCollapse: true,
-                paging: true,
-                autoWidth: false
-            });
+
+            var tableId = '#<%= TableEmployees.ClientID %>';
+
+        // CLONE HEADER FILTER
+        $(tableId + ' thead tr').clone().addClass('filters').appendTo(tableId + ' thead');
+
+        // INIT DATATABLE
+        var table = $(tableId).DataTable({
+
+            dom: 'ltip',
+            scrollY: "500px",
+            scrollX: true,
+            scrollCollapse: true,
+            paging: true,
+            autoWidth: false,
+            searchDelay: 0,
+            deferRender: true,
+            orderCellsTop: true,
+            fixedHeader: false,
+
+            initComplete: function () {
+
+                var api = this.api();
+
+                // SEARCH PER COLUMN
+                api.columns().eq(0).each(function (colIdx) {
+
+                    // SKIP ACTION COLUMN
+                    if (colIdx == 0) {
+                        $('.filters th').eq(colIdx).html('');
+                        return;
+                    }
+
+                    var cell = $('.filters th').eq(colIdx);
+
+                    $(cell).html(
+                        '<input type="text" placeholder="Search" class="column-search" />'
+                    );
+
+                    $('input', cell)
+                        .off('keyup')
+                        .on('keyup', function (e) {
+
+                            e.stopPropagation();
+
+                            api.column(colIdx)
+                                .search(this.value)
+                                .draw();
+                        });
+                });
+
+                // TAMBAH FILTER JOIN DATE DI SAMPING SHOW ENTRIES
+                $("div.dataTables_length").append(`
+
+                    <div class="join-filter-wrapper">
+
+                        <label class="mb-0 fw-semibold">
+                            Join Date :
+                        </label>
+
+                        <input type="date"
+                            id="startDate"
+                            name="startDate"
+                            class="form-control form-control-sm join-filter-input" />
+
+                        <span>TO</span>
+
+                        <input type="date"
+                            id="endDate"
+                            name="endDate"
+                            class="form-control form-control-sm join-filter-input" />
+
+                        <button type="button"
+                            id="resetDate"
+                            class="btn btn-sm btnsecondary">
+                            Reset
+                        </button>
+
+                    </div>
+
+                `);
+            }
         });
+
+        // FILTER RANGE DATE
+         $.fn.dataTable.ext.search.push(
+
+            
+             function (settings, data, dataIndex) {
+
+                 debugger
+                var startDate = $('#startDate').val();
+
+                var endDate = $('#endDate').val();
+
+                // INDEX KOLOM JOIN DATE
+
+                var joinDate = data[13];
+
+                if (!joinDate) {
+                    return true;
+                 }
+                
+                var parts = joinDate.split('/');
+
+                if (parts.length < 3) {
+                    return true;
+                }
+
+                 var tableDate = new Date(
+                     parseInt(parts[0]),
+                     parseInt(parts[1]) - 1,
+                     parseInt(parts[2])
+                 );
+
+                 tableDate.setHours(0, 0, 0, 0);
+
+                 if (startDate) {
+
+                     var minDate = new Date(startDate);
+                     minDate.setHours(0, 0, 0, 0);
+
+                     if (tableDate < minDate) {
+                         return false;
+                     }
+                 }
+
+                 if (endDate) {
+
+                     var maxDate = new Date(endDate);
+                     maxDate.setHours(0, 0, 0, 0);
+
+                     if (tableDate > maxDate) {
+                         return false;
+                     }
+                 }
+                return true;
+            }
+        );
+
+      
+        $(document).on('change', '#startDate, #endDate', function () {
+            table.draw();
+        });
+
+        
+        $(document).on('click', '#resetDate', function () {
+
+            $('#startDate').val('');
+            $('#endDate').val('');
+
+            table.draw();
+        });
+
+    });
     </script>
+
+ 
 
     <script type="text/javascript">
         function initEmergencyContactDataTable() {

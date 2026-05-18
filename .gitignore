@@ -361,4 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/hris_ylid/Web.config
+
+
+# Sensitive config (JANGAN DI-COMMIT)
+hris_ylid/Web.config

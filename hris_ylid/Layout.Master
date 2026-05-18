@@ -47,18 +47,83 @@
     <link href="vendors/sweetalert.css" rel="stylesheet" />
     <link href="plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
 
+    <link href="vendors/toastify/toastify.css" rel="stylesheet" />
+    <script src="vendors/toastify/toastify.js"></script>
+
     <%--datatable--%>
     <link href="plugins/script_03122025/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="plugins/script_03122025/1.13.6/Datatable/jquery.dataTables.min.js"></script>
     <script src="plugins/script_03122025/3.7.1/jquery-3.7.1.min.js"></script>
 
+    <style>
+        #loadingOverlay{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(15,23,42,0.75);
+            display:none;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            z-index:999999;
+            backdrop-filter: blur(3px);
+        }
 
+    /*    .loader{
+            width:70px;
+            height:70px;
+            border:6px solid rgba(255,255,255,0.15);
+            border-top:6px solid #ff6d10;
+            border-radius:50%;
+            animation:spin 0.8s linear infinite;
+            box-shadow:0 0 20px rgba(255,109,16,0.5);
+        }*/
+
+        .loading-text{
+            margin-top:18px;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            letter-spacing:1px;
+        }
+
+        @keyframes spin{
+            100%{
+                transform:rotate(360deg);
+            }
+        }
+
+        </style>
 
 
 </head>
 
+
+<script>
+    function showLoading(text = "Processing...") {
+
+        document.querySelector(".loading-text").innerText = text;
+        document.getElementById("loadingOverlay").style.display = "flex";
+
+    }
+
+    function hideLoading() {
+        document.getElementById("loadingOverlay").style.display = "none";
+    }
+</script>
+
+
+
 <body>
-    <form id="form1" runat="server">
+   <%-- <form id="form1" runat="server">--%>
+
+    <!-- sebelum </form> -->
+<div id="loadingOverlay"> <div class="loader"></div>  <div class="loading-text">Processing...</div> </div>
+
+
+    <form id="form1" runat="server" enctype="multipart/form-data">
 
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
 

@@ -1,15 +1,13 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office.Word;
+
 //using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Spreadsheet;
-
-
+//using DocumentFormat.OpenXml.Wordprocessing;
 //using DocumentFormat.OpenXml;
 //using DocumentFormat.OpenXml.Drawing.Charts;
 //using DocumentFormat.OpenXml.Vml.Office;
-//using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
-//using Stripe;
-
 //using Stripe;
 using System;
 using System.Collections.Generic;
@@ -41,6 +39,49 @@ namespace hris_ylid
                 {
                     Response.Redirect("login.aspx?url=" + Server.UrlEncode(Request.Url.AbsoluteUri));
                 }
+
+                if (Session["ImportSuccess"] != null)
+                {
+
+                    string message = Session["ImportSuccess"].ToString();
+                    message = System.Web.HttpUtility.JavaScriptStringEncode(message);
+                    Session.Remove("ImportSuccess");
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "toast",
+                          $@"
+                        setTimeout(function() {{
+                            if (window.Toastify) {{
+                                Toastify({{
+                                    text: '{message}',
+                                    duration: 4000,
+                                    gravity: 'top',
+                                    position: 'center',
+                                    close: true,
+                                    style: {{ background: '#50C878' }}
+                                }}).showToast();
+                            }} else {{
+                                alert('{message}');
+                            }}
+
+                            setTimeout(function(){{
+                                window.location.href = '{ResolveUrl("~/DownloadImportLog.aspx")}';
+                            }}, 1000);
+
+                        }}, 200);
+                        ", true);
+
+                }
+
+
+                if (Session["ImportError"] != null)
+                {
+                    string message = Session["ImportError"].ToString().Replace("'", "\\'");
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "toastError",$"showErrorToast('{message}');",true);
+
+                    Session.Remove("ImportError");
+                }
+
 
 
                 BindDataTableEmployees();
@@ -2139,128 +2180,937 @@ namespace hris_ylid
 
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            if (FileUpload.FileName.Length > 0)
+            #region Logic lama 
+            //if (FileUpload.FileName.Length > 0)
+            //{
+            //    string path = string.Concat(Server.MapPath("~/UploadFiles/" + FileUpload.FileName));
+            //    FileUpload.SaveAs(path);
+
+            //    #region DefineTable
+            //    DataTable dt = new DataTable();
+            //    dt.Columns.Add("fullname", typeof(System.String));
+            //    dt.Columns.Add("nik", typeof(System.String));
+            //    dt.Columns.Add("id_position", typeof(System.String));
+            //    dt.Columns.Add("id_division", typeof(System.String));
+            //    dt.Columns.Add("id_section", typeof(System.String));
+            //    dt.Columns.Add("id_sub_section", typeof(System.String));
+            //    dt.Columns.Add("report_position", typeof(System.String));
+            //    dt.Columns.Add("code_location", typeof(System.String));
+            //    dt.Columns.Add("status", typeof(System.String));
+            //    dt.Columns.Add("category", typeof(System.String));
+            //    dt.Columns.Add("join_date", typeof(System.DateTime));
+            //    dt.Columns.Add("date_of_birth", typeof(System.DateTime));
+            //    dt.Columns.Add("id_ktp", typeof(System.String));
+            //    dt.Columns.Add("address", typeof(System.String));
+            //    dt.Columns.Add("domicile", typeof(System.String));
+            //    dt.Columns.Add("id_bpjamsostek", typeof(System.String));
+
+            //    dt.Columns.Add("ContractStartDate", typeof(System.DateTime));
+            //    dt.Columns.Add("ContractEndDate", typeof(System.DateTime));
+            //    //dt.Columns.Add("createby", typeof(System.String));
+            //    //dt.Columns.Add("create_date", typeof(System.String));
+            //    //dt.Columns.Add("modifiedby", typeof(System.String));
+            //    //dt.Columns.Add("modified_date", typeof(System.String));
+            //    #endregion
+
+            //    XLWorkbook _vWBUpload = new XLWorkbook(path);
+            //    IXLWorksheet _vWorksheet = _vWBUpload.Worksheets.First();
+
+            //    int _ExcelRow = 3;
+
+            //    var _tesdddd = _vWorksheet.Cell(_ExcelRow, 4).Value.ToString().Length;
+
+            //    while (_vWorksheet.Cell(_ExcelRow, 4).Value.ToString().Length > 0)
+            //    {
+
+            //        DataRow _dr = dt.NewRow();
+
+            //        var _testss = _vWorksheet.Cell(_ExcelRow, 20).Value.ToString().Length;
+
+            //        #region DefineValue
+            //        _dr["nik"] = _vWorksheet.Cell(_ExcelRow, 4).Value.ToString();
+            //        _dr["fullname"] = _vWorksheet.Cell(_ExcelRow, 5).Value.ToString();
+            //        if (_vWorksheet.Cell(_ExcelRow, 6).Value.ToString().Length > 0) { _dr["date_of_birth"] = _vWorksheet.Cell(_ExcelRow, 6).GetDateTime(); }
+            //        _dr["id_position"] = _vWorksheet.Cell(_ExcelRow, 7).Value.ToString();
+            //        _dr["id_division"] = _vWorksheet.Cell(_ExcelRow, 8).Value.ToString();
+            //        _dr["id_section"] = _vWorksheet.Cell(_ExcelRow, 9).Value.ToString();
+            //        _dr["id_sub_section"] = _vWorksheet.Cell(_ExcelRow, 10).Value.ToString();
+            //        _dr["category"] = _vWorksheet.Cell(_ExcelRow, 11).Value.ToString();
+            //        _dr["code_location"] = _vWorksheet.Cell(_ExcelRow, 12).Value.ToString();
+            //        _dr["report_position"] = _vWorksheet.Cell(_ExcelRow, 13).Value.ToString();
+            //        _dr["status"] = _vWorksheet.Cell(_ExcelRow, 14).Value.ToString();
+            //        _dr["join_date"] = _vWorksheet.Cell(_ExcelRow, 15).GetDateTime();
+            //        _dr["id_ktp"] = _vWorksheet.Cell(_ExcelRow, 16).Value.ToString();
+            //        _dr["address"] = _vWorksheet.Cell(_ExcelRow, 17).Value.ToString();
+            //        _dr["domicile"] = _vWorksheet.Cell(_ExcelRow, 18).Value.ToString();
+            //        _dr["id_bpjamsostek"] = _vWorksheet.Cell(_ExcelRow, 19).Value.ToString();
+            //        if (_vWorksheet.Cell(_ExcelRow, 20).Value.ToString().Length > 0) { _dr["ContractStartDate"] = _vWorksheet.Cell(_ExcelRow, 20).GetDateTime(); }
+            //        if (_vWorksheet.Cell(_ExcelRow, 21).Value.ToString().Length > 0) { _dr["ContractEndDate"] = _vWorksheet.Cell(_ExcelRow, 21).GetDateTime(); }
+
+            //        #endregion
+
+            //        dt.Rows.Add(_dr);
+
+            //        _ExcelRow = _ExcelRow + 1;
+            //    }
+
+            //    string pathdb = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
+            //    SqlConnection Con = new SqlConnection(pathdb);
+            //    SqlCommand sqlcomm = new SqlCommand();
+            //    sqlcomm.CommandText = "sp_HRIS_DB_Employees";
+            //    sqlcomm.CommandType = CommandType.StoredProcedure;
+            //    sqlcomm.Connection = Con;
+
+            //    Con.Open();
+
+            //    foreach (DataRow _dr1 in dt.Rows)
+            //    {
+            //        #region ParametersValue
+            //        sqlcomm.Parameters.AddWithValue("@StatementType", "SaveImportExisting");
+            //        if (CustomString(_dr1["fullname"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@fullname", CustomString(_dr1["fullname"].ToString())); }
+            //        if (CustomString(_dr1["nik"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@nik", CustomString(_dr1["nik"].ToString())); }
+            //        if (CustomString(_dr1["id_position"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_position", CustomString(_dr1["id_position"].ToString())); }
+            //        if (CustomString(_dr1["id_division"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_division", CustomString(_dr1["id_division"].ToString())); }
+            //        if (CustomString(_dr1["id_section"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_section", CustomString(_dr1["id_section"].ToString())); }
+            //        if (CustomString(_dr1["id_sub_section"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_sub_section", CustomString(_dr1["id_sub_section"].ToString())); }
+            //        if (CustomString(_dr1["report_position"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@report_position", CustomString(_dr1["report_position"].ToString())); }
+            //        if (CustomString(_dr1["code_location"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@code_location", CustomString(_dr1["code_location"].ToString())); }
+            //        if (CustomString(_dr1["status"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@status", CustomString(_dr1["status"].ToString())); }
+            //        if (CustomString(_dr1["category"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@category", CustomString(_dr1["category"].ToString())); }
+            //        if (_dr1["join_date"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@join_date", _dr1["join_date"]); }
+            //        if (_dr1["date_of_birth"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@date_of_birth_value", _dr1["date_of_birth"]); }
+            //        if (CustomString(Session["Fullname"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@createdby", CustomString(Session["Fullname"].ToString())); }
+            //        if (CustomString(Session["Fullname"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@modifiedby", CustomString(Session["Fullname"].ToString())); }
+            //        if (CustomString(_dr1["id_ktp"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_ktp_value", CustomString(_dr1["id_ktp"].ToString())); }
+            //        if (CustomString(_dr1["address"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@address_value", CustomString(_dr1["address"].ToString())); }
+            //        if (CustomString(_dr1["domicile"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@domicile_value", CustomString(_dr1["domicile"].ToString())); }
+            //        if (CustomString(_dr1["id_bpjamsostek"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_bpjamsostek_value", CustomString(_dr1["id_bpjamsostek"].ToString())); }
+
+            //        if (_dr1["ContractStartDate"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@ContractStartDate", _dr1["ContractStartDate"]); }
+            //        if (_dr1["ContractEndDate"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@ContractEndDate", _dr1["ContractEndDate"]); }
+            //        #endregion
+
+            //        sqlcomm.ExecuteNonQuery();
+
+            //        sqlcomm.Parameters.Clear();
+
+            //        BindDataTableEmployees();
+            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "text", "UploadSuccess();", true);
+
+            //        Con.Close();
+            //        File.Delete(Server.MapPath("~/UploadFiles/" + FileUpload.PostedFile.FileName));
+            //    }
+
+            //}
+            #endregion
+            #region Logic Baru 
+
+            if (!FileUpload.HasFile) return;
+
+
+            string path = string.Concat(Server.MapPath("~/UploadFiles/" + FileUpload.FileName));           
+           
+            FileUpload.SaveAs(path);
+
+            try
             {
-                string path = string.Concat(Server.MapPath("~/UploadFiles/" + FileUpload.FileName));
-                FileUpload.SaveAs(path);
-
-                #region DefineTable
-                DataTable dt = new DataTable();
-                dt.Columns.Add("fullname", typeof(System.String));
-                dt.Columns.Add("nik", typeof(System.String));
-                dt.Columns.Add("id_position", typeof(System.String));
-                dt.Columns.Add("id_division", typeof(System.String));
-                dt.Columns.Add("id_section", typeof(System.String));
-                dt.Columns.Add("id_sub_section", typeof(System.String));
-                dt.Columns.Add("report_position", typeof(System.String));
-                dt.Columns.Add("code_location", typeof(System.String));
-                dt.Columns.Add("status", typeof(System.String));
-                dt.Columns.Add("category", typeof(System.String));
-                dt.Columns.Add("join_date", typeof(System.DateTime));
-                dt.Columns.Add("date_of_birth", typeof(System.DateTime));
-                dt.Columns.Add("id_ktp", typeof(System.String));
-                dt.Columns.Add("address", typeof(System.String));
-                dt.Columns.Add("domicile", typeof(System.String));
-                dt.Columns.Add("id_bpjamsostek", typeof(System.String));
-
-                dt.Columns.Add("ContractStartDate", typeof(System.DateTime));
-                dt.Columns.Add("ContractEndDate", typeof(System.DateTime));
-                //dt.Columns.Add("createby", typeof(System.String));
-                //dt.Columns.Add("create_date", typeof(System.String));
-                //dt.Columns.Add("modifiedby", typeof(System.String));
-                //dt.Columns.Add("modified_date", typeof(System.String));
-                #endregion
-
-                XLWorkbook _vWBUpload = new XLWorkbook(path);
-                IXLWorksheet _vWorksheet = _vWBUpload.Worksheets.First();
-
-                int _ExcelRow = 3;
-
-                var _tesdddd = _vWorksheet.Cell(_ExcelRow, 4).Value.ToString().Length;
-
-                while (_vWorksheet.Cell(_ExcelRow, 4).Value.ToString().Length > 0)
+                using (var wb = new XLWorkbook(path))
                 {
+                    DataTable dtRawEmployee = ReadSheet(wb, "Employee detail");
+                    DataTable dtRawPersonalinfo = ReadSheet(wb, "Personal information");
+                    DataTable dtEducationinfo = ReadSheet(wb, "Education information");
+                    DataTable dtRawFamilyinfo = ReadSheet(wb, "Family information");
+                    DataTable dtRawEmergencyContact = ReadSheet(wb, "Emergency contact information");
+                    DataTable dtRawCareerHistory = ReadSheet(wb, "Career history");
+                    DataTable dtRawWarningletterHistory = ReadSheet(wb, "Warning letter history");
 
-                    DataRow _dr = dt.NewRow();
 
-                    var _testss = _vWorksheet.Cell(_ExcelRow, 20).Value.ToString().Length;
+                    DataTable dtEmployee = MapEmployeeDetail(dtRawEmployee);
+                    DataTable dtPersonalInfo = MapPersonalInfo(dtRawPersonalinfo);
+                    DataTable dtEducationInfo = MapEducationInfo(dtEducationinfo);
+                    DataTable dtFamilyInfo = MapFamilyInfo(dtRawFamilyinfo);
+                    DataTable dtEmergencyContact = MapEmergencyContact(dtRawEmergencyContact);
+                    DataTable dtCareerHistory = MapCareerHistory(dtRawCareerHistory);
+                    DataTable dtWarningLetterHistory = MapWarningLetterHistory(dtRawWarningletterHistory);
 
-                    #region DefineValue
-                    _dr["nik"] = _vWorksheet.Cell(_ExcelRow, 4).Value.ToString();
-                    _dr["fullname"] = _vWorksheet.Cell(_ExcelRow, 5).Value.ToString();
-                    if (_vWorksheet.Cell(_ExcelRow, 6).Value.ToString().Length > 0) { _dr["date_of_birth"] = _vWorksheet.Cell(_ExcelRow, 6).GetDateTime(); }
-                    _dr["id_position"] = _vWorksheet.Cell(_ExcelRow, 7).Value.ToString();
-                    _dr["id_division"] = _vWorksheet.Cell(_ExcelRow, 8).Value.ToString();
-                    _dr["id_section"] = _vWorksheet.Cell(_ExcelRow, 9).Value.ToString();
-                    _dr["id_sub_section"] = _vWorksheet.Cell(_ExcelRow, 10).Value.ToString();
-                    _dr["category"] = _vWorksheet.Cell(_ExcelRow, 11).Value.ToString();
-                    _dr["code_location"] = _vWorksheet.Cell(_ExcelRow, 12).Value.ToString();
-                    _dr["report_position"] = _vWorksheet.Cell(_ExcelRow, 13).Value.ToString();
-                    _dr["status"] = _vWorksheet.Cell(_ExcelRow, 14).Value.ToString();
-                    _dr["join_date"] = _vWorksheet.Cell(_ExcelRow, 15).GetDateTime();
-                    _dr["id_ktp"] = _vWorksheet.Cell(_ExcelRow, 16).Value.ToString();
-                    _dr["address"] = _vWorksheet.Cell(_ExcelRow, 17).Value.ToString();
-                    _dr["domicile"] = _vWorksheet.Cell(_ExcelRow, 18).Value.ToString();
-                    _dr["id_bpjamsostek"] = _vWorksheet.Cell(_ExcelRow, 19).Value.ToString();
-                    if (_vWorksheet.Cell(_ExcelRow, 20).Value.ToString().Length > 0) { _dr["ContractStartDate"] = _vWorksheet.Cell(_ExcelRow, 20).GetDateTime(); }
-                    if (_vWorksheet.Cell(_ExcelRow, 21).Value.ToString().Length > 0) { _dr["ContractEndDate"] = _vWorksheet.Cell(_ExcelRow, 21).GetDateTime(); }
 
-                    #endregion
+                    List<string> validationErrors = new List<string>();
 
-                    dt.Rows.Add(_dr);
 
-                    _ExcelRow = _ExcelRow + 1;
+                    /* =========================================================
+                       CEK SEMUA SHEET KOSONG
+                    ========================================================= */
+
+                    bool isAllSheetEmpty = dtEmployee.Rows.Count == 0 && dtPersonalInfo.Rows.Count == 0 && 
+                        dtEducationInfo.Rows.Count == 0 && dtFamilyInfo.Rows.Count == 0 && dtEmergencyContact.Rows.Count == 0 &&
+                        dtCareerHistory.Rows.Count == 0 && dtWarningLetterHistory.Rows.Count == 0;
+
+                    if (isAllSheetEmpty)
+                    {
+                        Session["ImportError"] = "Import empty file, no data processed.";
+                        Response.Redirect(Request.RawUrl);
+                        return;
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI EMPLOYEE DETAIL
+                    ========================================================= */
+
+                    if (dtEmployee.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtEmployee.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Employee Detail : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Employee Detail : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI PERSONAL INFORMATION
+                    ========================================================= */
+
+                    if (dtPersonalInfo.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtPersonalInfo.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Personal Information : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Personal Information : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI EDUCATION INFORMATION
+                    ========================================================= */
+
+                    if (dtEducationInfo.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtEducationInfo.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Education Information : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Education Information : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI FAMILY INFORMATION
+                    ========================================================= */
+
+                    if (dtFamilyInfo.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtFamilyInfo.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Family Information : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Family Information : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI EMERGENCY CONTACT
+                    ========================================================= */
+
+                    if (dtEmergencyContact.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtEmergencyContact.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Emergency Contact : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Emergency Contact : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI CAREER HISTORY
+                    ========================================================= */
+
+                    if (dtCareerHistory.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtCareerHistory.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Career History : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Career History : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       VALIDASI WARNING LETTER
+                    ========================================================= */
+
+                    if (dtWarningLetterHistory.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dtWarningLetterHistory.Rows)
+                        {
+                            string employeeId = row["EmployeeID"]?.ToString().Trim();
+
+                            if (string.IsNullOrWhiteSpace(employeeId))
+                            {
+                                validationErrors.Add("Sheet Warning Letter : EmployeeID cannot be empty.");
+                                continue;
+                            }
+
+                            if (!employeeId.Any(char.IsDigit))
+                            {
+                                validationErrors.Add($"Sheet Warning Letter : EmployeeID '{employeeId}' must contain numbers.");
+                            }
+                        }
+                    }
+
+
+                    /* =========================================================
+                       JIKA ADA ERROR
+                    ========================================================= */
+
+                    if (validationErrors.Any())
+                    {
+                        Session["ImportError"] = string.Join("<br>", validationErrors.Distinct());
+
+                        Response.Redirect(Request.RawUrl);
+
+                        return;
+                    }
+
+
+                    using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("sp_HRIS_DB_ImportEmployeeAll", con))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+
+                            cmd.CommandTimeout = 300;
+
+                            //Employee Detail
+                            var param = cmd.Parameters.AddWithValue("@EmployeeTVP", dtEmployee);
+                            param.SqlDbType = SqlDbType.Structured;
+                            param.TypeName = "dbo.EmployeeType";
+
+                            //Personal Info
+                            var paramPersonal = cmd.Parameters.AddWithValue("@PersonalTVP", dtPersonalInfo);
+                            paramPersonal.SqlDbType = SqlDbType.Structured;
+                            paramPersonal.TypeName = "dbo.PersonalType";
+
+                            //Education Info
+                            var paramEducation = cmd.Parameters.AddWithValue("@EducationTVP", dtEducationInfo);
+                            paramEducation.SqlDbType = SqlDbType.Structured;
+                            paramEducation.TypeName = "dbo.EducationType";
+
+                            //Family Info
+                            var paramFamily = cmd.Parameters.AddWithValue("@FamilyTVP", dtFamilyInfo);
+                            paramFamily.SqlDbType = SqlDbType.Structured;
+                            paramFamily.TypeName = "dbo.FamilyType";
+
+                            //Emergency Contact
+                            var paramEmergency = cmd.Parameters.AddWithValue("@EmergencyContactTVP", dtEmergencyContact);
+                            paramEmergency.SqlDbType = SqlDbType.Structured;
+                            paramEmergency.TypeName = "dbo.EmergencyContactType";
+
+                            //Career History
+                            var paramCareer = cmd.Parameters.AddWithValue("@CareerHistoryTVP", dtCareerHistory);
+                            paramCareer.SqlDbType = SqlDbType.Structured;
+                            paramCareer.TypeName = "dbo.CareerHistoryType";
+
+                            //Warning Letter History
+                            var paramWarning = cmd.Parameters.AddWithValue("@WarningLetterTVP", dtWarningLetterHistory);
+                            paramWarning.SqlDbType = SqlDbType.Structured;
+                            paramWarning.TypeName = "dbo.WarningLetterType";
+
+                            cmd.Parameters.AddWithValue("@CreatedBy", Session["Fullname"].ToString());
+
+
+
+                            con.Open();
+
+                            DataTable dtLog = new DataTable();
+                            using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                            {
+                                da.Fill(dtLog);
+                            }
+
+
+                            //BindDataTableEmployees();
+
+                            Session["ImportLog"] = dtLog;
+                            Session["ImportSuccess"] = "Import successfully";
+
+                            
+                            File.Delete(path);
+
+                            Response.Redirect(Request.RawUrl, false);
+                            Context.ApplicationInstance.CompleteRequest();
+
+                            
+
+                            return;
+
+                         
+
+                            //File.Delete(path);
+
+
+                            //cmd.ExecuteNonQuery();
+                        }
+                    }
                 }
 
-                string pathdb = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
-                SqlConnection Con = new SqlConnection(pathdb);
-                SqlCommand sqlcomm = new SqlCommand();
-                sqlcomm.CommandText = "sp_HRIS_DB_Employees";
-                sqlcomm.CommandType = CommandType.StoredProcedure;
-                sqlcomm.Connection = Con;
 
-                Con.Open();
 
-                foreach (DataRow _dr1 in dt.Rows)
-                {
-                    #region ParametersValue
-                    sqlcomm.Parameters.AddWithValue("@StatementType", "SaveImportExisting");
-                    if (CustomString(_dr1["fullname"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@fullname", CustomString(_dr1["fullname"].ToString())); }
-                    if (CustomString(_dr1["nik"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@nik", CustomString(_dr1["nik"].ToString())); }
-                    if (CustomString(_dr1["id_position"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_position", CustomString(_dr1["id_position"].ToString())); }
-                    if (CustomString(_dr1["id_division"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_division", CustomString(_dr1["id_division"].ToString())); }
-                    if (CustomString(_dr1["id_section"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_section", CustomString(_dr1["id_section"].ToString())); }
-                    if (CustomString(_dr1["id_sub_section"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_sub_section", CustomString(_dr1["id_sub_section"].ToString())); }
-                    if (CustomString(_dr1["report_position"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@report_position", CustomString(_dr1["report_position"].ToString())); }
-                    if (CustomString(_dr1["code_location"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@code_location", CustomString(_dr1["code_location"].ToString())); }
-                    if (CustomString(_dr1["status"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@status", CustomString(_dr1["status"].ToString())); }
-                    if (CustomString(_dr1["category"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@category", CustomString(_dr1["category"].ToString())); }
-                    if (_dr1["join_date"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@join_date", _dr1["join_date"]); }
-                    if (_dr1["date_of_birth"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@date_of_birth_value", _dr1["date_of_birth"]); }
-                    if (CustomString(Session["Fullname"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@createdby", CustomString(Session["Fullname"].ToString())); }
-                    if (CustomString(Session["Fullname"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@modifiedby", CustomString(Session["Fullname"].ToString())); }
-                    if (CustomString(_dr1["id_ktp"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_ktp_value", CustomString(_dr1["id_ktp"].ToString())); }
-                    if (CustomString(_dr1["address"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@address_value", CustomString(_dr1["address"].ToString())); }
-                    if (CustomString(_dr1["domicile"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@domicile_value", CustomString(_dr1["domicile"].ToString())); }
-                    if (CustomString(_dr1["id_bpjamsostek"].ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@id_bpjamsostek_value", CustomString(_dr1["id_bpjamsostek"].ToString())); }
+                //Response.Redirect(Request.RawUrl, false);
+                //Context.ApplicationInstance.CompleteRequest();
 
-                    if (_dr1["ContractStartDate"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@ContractStartDate", _dr1["ContractStartDate"]); }
-                    if (_dr1["ContractEndDate"].ToString().Length > 0) { sqlcomm.Parameters.AddWithValue("@ContractEndDate", _dr1["ContractEndDate"]); }
-                    #endregion
+                
 
-                    sqlcomm.ExecuteNonQuery();
 
-                    sqlcomm.Parameters.Clear();
-
-                    BindDataTableEmployees();
-                    Page.ClientScript.RegisterStartupScript(this.GetType(), "text", "UploadSuccess();", true);
-
-                    Con.Close();
-                    File.Delete(Server.MapPath("~/UploadFiles/" + FileUpload.PostedFile.FileName));
-                }
 
             }
+            catch (Exception ex)
+            {
+                BindDataTableEmployees();
+
+                Session["ImportError"] = ex.Message;
+                               
+                Response.Redirect(Request.RawUrl); 
+
+                return;
+            }
+
+
+            #endregion
+
+
         }
+
+ 
+
+        private DataTable ReadSheet(XLWorkbook wb, string sheetName)
+        {
+            DataTable dt = new DataTable();
+            var ws = wb.Worksheet(sheetName);
+
+            bool firstRow = true;
+
+            foreach (IXLRow row in ws.RowsUsed())
+            {
+                if (firstRow)
+                {
+                    foreach (IXLCell cell in row.Cells())
+                        dt.Columns.Add(cell.Value.ToString().Trim());
+
+                    firstRow = false;
+                }
+                else
+                {
+                    var newRow = dt.NewRow();
+                    int i = 0;
+
+                    foreach (IXLCell cell in row.Cells())
+                    {
+                        newRow[i] = cell.Value.ToString();
+                        i++;
+                    }
+
+                    dt.Rows.Add(newRow);
+                }
+            }
+
+            return dt;
+        }
+
+
+
+
+        private string GetValue(DataRow row, string col)
+        {
+            return row.Table.Columns.Contains(col)
+                ? row[col]?.ToString().Trim()
+                : "";
+        }
+
+        private DataTable MapEmployeeDetail(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+            
+            dt.Columns.Add("EmployeeID");
+            dt.Columns.Add("EmployeeName");
+            dt.Columns.Add("Title");
+            dt.Columns.Add("Division");
+            dt.Columns.Add("Section");
+            dt.Columns.Add("Subsection");
+            dt.Columns.Add("EmploymentStatus");
+            dt.Columns.Add("Location");
+            dt.Columns.Add("ReportTo");
+            dt.Columns.Add("Status");
+            dt.Columns.Add("WorkingEmail");
+            dt.Columns.Add("JoinDate", typeof(DateTime));
+            dt.Columns.Add("ContractStartDate", typeof(DateTime));
+            dt.Columns.Add("ContractEndDate", typeof(DateTime));
+            dt.Columns.Add("EffectEndDate", typeof(DateTime));
+            dt.Columns.Add("Sourcehire");
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+                dr["EmployeeName"] = GetValue(row, "Employee Name");
+                dr["Title"] = GetValue(row, "Title");
+                dr["Division"] = GetValue(row, "Division");
+                dr["Section"] = GetValue(row, "Section");
+                dr["Subsection"] = GetValue(row, "Subsection");
+                dr["EmploymentStatus"] = GetValue(row, "Employment Status");
+                dr["Location"] = GetValue(row, "Location");
+                dr["ReportTo"] = GetValue(row, "Report to Position");
+                dr["Status"] = GetValue(row, "Status");
+                dr["Sourcehire"] = GetValue(row, "Source of Hire");
+                dr["WorkingEmail"] = GetValue(row, "Working Email");
+
+                if (DateTime.TryParse(GetValue(row, "Join Date"), out DateTime joinDate))
+                    dr["JoinDate"] = joinDate;
+
+                if (DateTime.TryParse(GetValue(row, "Contract Start Date"), out DateTime startDate))
+                    dr["ContractStartDate"] = startDate;
+
+                if (DateTime.TryParse(GetValue(row, "Contract End Date"), out DateTime endDate))
+                    dr["ContractEndDate"] = endDate;
+
+                if (DateTime.TryParse(GetValue(row, "Effective End Date"), out DateTime EffcendDate))
+                    dr["EffectEndDate"] = EffcendDate;
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+        private DataTable MapPersonalInfo(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+           
+            dt.Columns.Add("EmployeeID");
+            dt.Columns.Add("PlaceOfBirth");
+            dt.Columns.Add("DateOfBirth", typeof(DateTime));
+            dt.Columns.Add("Gender");
+            dt.Columns.Add("BloodType");
+            dt.Columns.Add("Nationality");
+            dt.Columns.Add("NationalIDNumber");
+            dt.Columns.Add("Address");
+            dt.Columns.Add("Domicile");
+            dt.Columns.Add("City");
+            dt.Columns.Add("Province");
+            dt.Columns.Add("PostalCode");
+            dt.Columns.Add("MobilePhone");
+            dt.Columns.Add("PersonalEmail");
+            dt.Columns.Add("FamilyCardNumber");
+            dt.Columns.Add("MaritalStatus");
+            dt.Columns.Add("Religion");
+            dt.Columns.Add("BankName");
+            dt.Columns.Add("BankAccountNumber");
+            dt.Columns.Add("BankAccountName");
+            dt.Columns.Add("BPJSTKNumber");
+            dt.Columns.Add("BPJSKSNumber");
+            dt.Columns.Add("NPWPNumber");
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+             
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+
+            
+                dr["PlaceOfBirth"] = GetValue(row, "Place of Birth");
+                dr["Gender"] = GetValue(row, "Gender");
+                dr["BloodType"] = GetValue(row, "Blood Type");
+                dr["Nationality"] = GetValue(row, "Nationality");
+                dr["NationalIDNumber"] = GetValue(row, "National ID Number");
+                dr["Address"] = GetValue(row, "Address");
+                dr["Domicile"] = GetValue(row, "Domicile");
+                dr["City"] = GetValue(row, "City");
+                dr["Province"] = GetValue(row, "Province");
+                dr["PostalCode"] = GetValue(row, "Postal Code");
+                dr["MobilePhone"] = GetValue(row, "Mobile Phone");
+                dr["PersonalEmail"] = GetValue(row, "Personal Email");
+                dr["FamilyCardNumber"] = GetValue(row, "Family Card Number");
+                dr["MaritalStatus"] = GetValue(row, "Marital Status");
+                dr["Religion"] = GetValue(row, "Religion");
+                dr["BankName"] = GetValue(row, "Bank Name");
+                dr["BankAccountNumber"] = GetValue(row, "Bank Account Number");
+                dr["BankAccountName"] = GetValue(row, "Bank Account Name");
+                dr["BPJSTKNumber"] = GetValue(row, "BPJS TK Number");
+                dr["BPJSKSNumber"] = GetValue(row, "BPJS KS Number");
+                dr["NPWPNumber"] = GetValue(row, "NPWP Number");
+
+               
+                if (DateTime.TryParse(GetValue(row, "Date of Birth"), out DateTime dob))
+                    dr["DateOfBirth"] = dob;
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+        private DataTable MapEducationInfo(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+            
+            dt.Columns.Add("EmployeeID");
+            dt.Columns.Add("Education1");
+            dt.Columns.Add("Major1");
+            dt.Columns.Add("Institute1");
+            dt.Columns.Add("Education2");
+            dt.Columns.Add("Major2");
+            dt.Columns.Add("Institute2");
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+
+                
+                dr["Education1"] = GetValue(row, "Education 1");
+                dr["Major1"] = GetValue(row, "Major 1");
+                dr["Institute1"] = GetValue(row, "University/ Institute / School 1");
+
+               
+                dr["Education2"] = GetValue(row, "Education 2");
+                dr["Major2"] = GetValue(row, "Major 2");
+                dr["Institute2"] = GetValue(row, "University/ Institute / School 2");
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+        private DataTable MapFamilyInfo(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+           
+            dt.Columns.Add("EmployeeID");
+
+            dt.Columns.Add("SpouseName");
+            dt.Columns.Add("SpouseIDNumber");
+            dt.Columns.Add("SpousePlaceOfBirth");
+            dt.Columns.Add("SpouseDateOfBirth", typeof(DateTime));
+
+            dt.Columns.Add("Child1Name");
+            dt.Columns.Add("Child1IDNumber");
+            dt.Columns.Add("Child1PlaceOfBirth");
+            dt.Columns.Add("Child1DateOfBirth", typeof(DateTime));
+
+            dt.Columns.Add("Child2Name");
+            dt.Columns.Add("Child2IDNumber");
+            dt.Columns.Add("Child2PlaceOfBirth");
+            dt.Columns.Add("Child2DateOfBirth", typeof(DateTime));
+
+            dt.Columns.Add("Child3Name");
+            dt.Columns.Add("Child3IDNumber");
+            dt.Columns.Add("Child3PlaceOfBirth");
+            dt.Columns.Add("Child3DateOfBirth", typeof(DateTime));
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+
+                
+                dr["SpouseName"] = GetValue(row, "Spouse Name");
+                dr["SpouseIDNumber"] = GetValue(row, "Spouse ID Number");
+                dr["SpousePlaceOfBirth"] = GetValue(row, "Spouse Place of Birth");
+
+                if (DateTime.TryParse(GetValue(row, "Spouse Date of Birth"), out DateTime spouseDob))
+                    dr["SpouseDateOfBirth"] = spouseDob;
+
+                
+                dr["Child1Name"] = GetValue(row, "1st Child Name");
+                dr["Child1IDNumber"] = GetValue(row, "1st Child ID Number");
+                dr["Child1PlaceOfBirth"] = GetValue(row, "1st Child Place of Birth");
+
+                if (DateTime.TryParse(GetValue(row, "1st Child Date of Birth"), out DateTime c1Dob))
+                    dr["Child1DateOfBirth"] = c1Dob;
+
+                dr["Child2Name"] = GetValue(row, "2nd Child Name");
+                dr["Child2IDNumber"] = GetValue(row, "2nd Child ID Number");
+                dr["Child2PlaceOfBirth"] = GetValue(row, "2nd Child Place of Birth");
+
+                if (DateTime.TryParse(GetValue(row, "2nd Child Date of Birth"), out DateTime c2Dob))
+                    dr["Child2DateOfBirth"] = c2Dob;
+
+              
+                dr["Child3Name"] = GetValue(row, "3rd Child Name");
+                dr["Child3IDNumber"] = GetValue(row, "3rd Child ID Number");
+                dr["Child3PlaceOfBirth"] = GetValue(row, "3rd Child Place of Birth");
+
+                if (DateTime.TryParse(GetValue(row, "3rd Child Date of Birth"), out DateTime c3Dob))
+                    dr["Child3DateOfBirth"] = c3Dob;
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+        private DataTable MapEmergencyContact(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+           
+            dt.Columns.Add("EmployeeID");
+            dt.Columns.Add("ContactName");
+            dt.Columns.Add("ContactAddress");
+            dt.Columns.Add("ContactRelationship");
+            dt.Columns.Add("PhoneNumber");
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+               
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+                dr["ContactName"] = GetValue(row, "Contact Name");
+                dr["ContactAddress"] = GetValue(row, "Contact Address");
+                dr["ContactRelationship"] = GetValue(row, "Contact Relationship");
+                dr["PhoneNumber"] = GetValue(row, "Phone Number");
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+        private DataTable MapCareerHistory(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+           
+            dt.Columns.Add("EmployeeID");
+            dt.Columns.Add("EmployeeName");
+            dt.Columns.Add("Title");
+            dt.Columns.Add("Division");
+            dt.Columns.Add("Section");
+            dt.Columns.Add("Subsection");
+            dt.Columns.Add("EmploymentStatus");
+            dt.Columns.Add("Location");
+            dt.Columns.Add("Category");
+            dt.Columns.Add("EffectiveDate", typeof(DateTime));
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+                dr["EmployeeName"] = GetValue(row, "Employee Name");
+                dr["Title"] = GetValue(row, "Title");
+                dr["Division"] = GetValue(row, "Division");
+                dr["Section"] = GetValue(row, "Section");
+                dr["Subsection"] = GetValue(row, "Subsection");
+                dr["EmploymentStatus"] = GetValue(row, "Employment Status");
+                dr["Location"] = GetValue(row, "Location");
+                dr["Category"] = GetValue(row, "Category");
+
+                
+                if (DateTime.TryParse(GetValue(row, "Effective Date"), out DateTime effDate))
+                    dr["EffectiveDate"] = effDate;
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+        private DataTable MapWarningLetterHistory(DataTable dtRaw)
+        {
+            DataTable dt = new DataTable();
+
+            
+            dt.Columns.Add("EmployeeID");
+            dt.Columns.Add("EmployeeName");
+            //dt.Columns.Add("Title");
+            //dt.Columns.Add("Division");
+            //dt.Columns.Add("Section");
+            //dt.Columns.Add("Subsection");
+            //dt.Columns.Add("EmploymentStatus");
+            //dt.Columns.Add("Location");
+            dt.Columns.Add("WarningType");
+            dt.Columns.Add("Category");
+            dt.Columns.Add("StartDate", typeof(DateTime));
+            dt.Columns.Add("EndDate", typeof(DateTime));
+
+            foreach (DataRow row in dtRaw.Rows)
+            {
+                string empId = GetValue(row, "Employee ID Number");
+
+                if (string.IsNullOrWhiteSpace(empId))
+                    continue;
+
+                DataRow dr = dt.NewRow();
+
+                dr["EmployeeID"] = empId;
+                dr["EmployeeName"] = GetValue(row, "Employee Name");
+                //dr["Title"] = GetValue(row, "Title");
+                //dr["Division"] = GetValue(row, "Division");
+                //dr["Section"] = GetValue(row, "Section");
+                //dr["Subsection"] = GetValue(row, "Subsection");
+                //dr["EmploymentStatus"] = GetValue(row, "Employment Status");
+                //dr["Location"] = GetValue(row, "Location");
+                dr["WarningType"] = GetValue(row, "Type of Warning");
+                dr["Category"] = GetValue(row, "Category");
+               
+                if (DateTime.TryParse(GetValue(row, "Start date"), out DateTime startDate))
+                    dr["StartDate"] = startDate;
+
+                if (DateTime.TryParse(GetValue(row, "End date"), out DateTime endDate))
+                    dr["EndDate"] = endDate;
+
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+
+
+
+
+        private void ExportImportLog(DataTable dtLog, string fileName)
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dtLog, "Import Log");
+
+                Response.Clear();
+                Response.Buffer = true;
+
+                Response.ContentType =
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+                Response.AddHeader(
+                    "content-disposition",
+                    $"attachment;filename={fileName}"
+                );
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    wb.SaveAs(ms);
+
+                    ms.WriteTo(Response.OutputStream);
+
+                    Response.Flush();
+                    //Response.End();
+                }
+
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+            }
+        }
+
+
 
         protected void TableCandidateJoin_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -2360,46 +3210,150 @@ namespace hris_ylid
             BindDataTableEmployees();
         }
 
+
         protected void btnGenerateExcel_Click(object sender, EventArgs e)
         {
-            string path = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
-            SqlConnection Con = new SqlConnection(path);
-            Con.Open();
-            SqlCommand sqlcomm = new SqlCommand();
-            sqlcomm.CommandText = "sp_HRIS_DB_Employees";
-            sqlcomm.CommandType = CommandType.StoredProcedure;
-            sqlcomm.Connection = Con;
-            sqlcomm.Parameters.AddWithValue("@StatementType", "GenerateExcel");
-
-            SqlDataAdapter sda = new SqlDataAdapter(sqlcomm);
-            using (DataTable dt = new DataTable())
+            try
             {
-                //string sFileName = "JobListExport-" + System.DateTime.Now.Date + ".xlsx";
-                //sFileName = sFileName.Replace("/", "");
-                sda.Fill(dt);
-                string _vDate1 = DateTime.Now.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
+                string startDate = Request.Form["startDate"];
+                string endDate = Request.Form["endDate"];
 
-                using (XLWorkbook wb = new XLWorkbook())
+                /* =========================================
+                   VALIDASI
+                ========================================= */
+
+                if (string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
                 {
-                    wb.Worksheets.Add(dt, "Data Master Employees");
-                    Response.Clear();
-                    Response.Buffer = true;
-                    Response.Charset = "";
-                    //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                    //Response.AddHeader("content-disposition", "attachment; filename=JoblistExport.xlsx");
-                    Response.ClearContent();
-                    Response.AppendHeader("content-disposition", "attachment; filename=" + "Data Master Employees" + "_" + _vDate1 + ".xlsx");
-                    Response.ContentType = "application/excel";
-                    using (MemoryStream MyMemoryStream = new MemoryStream())
+                    Session["ImportError"] = "Start Date / End Date is required";
+                    Response.Redirect(Request.RawUrl, false);
+
+                    Context.ApplicationInstance.CompleteRequest();
+                    return;
+                }
+
+
+                DateTime? start = null;
+                DateTime? end = null;
+
+
+                if (!string.IsNullOrWhiteSpace(startDate))
+                {
+                    start = Convert.ToDateTime(startDate);
+                }
+
+                if (!string.IsNullOrWhiteSpace(endDate))
+                {
+                    end = Convert.ToDateTime(endDate);
+                }
+
+
+                if (start.HasValue && end.HasValue && start > end )
+                {
+                    Session["ImportError"] = "Start Date cannot be greater than End Date";
+                    Response.Redirect(Request.RawUrl, false);
+
+                    Context.ApplicationInstance.CompleteRequest();
+                    return;
+                }
+
+
+
+                /* =========================================
+                   CALL STORE PROCEDURE
+                ========================================= */
+
+                DataSet ds = new DataSet();
+
+                using ( SqlConnection con =  new SqlConnection( ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GenerateAll", con))
                     {
-                        wb.SaveAs(MyMemoryStream);
-                        MyMemoryStream.WriteTo(Response.OutputStream);
-                        Response.Flush();
-                        Response.End();
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 300;
+                        cmd.Parameters.AddWithValue("@StartDate",(object)start ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue( "@EndDate", (object)end ?? DBNull.Value );
+                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                        {
+                            da.Fill(ds);
+                        }
                     }
                 }
+
+
+                Session["ExportMasterEmployee"] = ds;
+                Session["ImportSuccess"] = "Import successfully";
+
+
+                Response.Redirect(Request.RawUrl, false);
+                Context.ApplicationInstance.CompleteRequest();
+
+
+                return;
+
+
             }
+            catch (Exception ex)
+            {
+                Session["ImportError"] = ex.Message;
+                Response.Redirect(Request.RawUrl, false);
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //protected void btnGenerateExcel_Click(object sender, EventArgs e)
+        //{
+        //    string path = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
+        //    SqlConnection Con = new SqlConnection(path);
+        //    Con.Open();
+        //    SqlCommand sqlcomm = new SqlCommand();
+        //    sqlcomm.CommandText = "sp_HRIS_DB_Employees";
+        //    sqlcomm.CommandType = CommandType.StoredProcedure;
+        //    sqlcomm.Connection = Con;
+        //    sqlcomm.Parameters.AddWithValue("@StatementType", "GenerateExcel");
+
+        //    SqlDataAdapter sda = new SqlDataAdapter(sqlcomm);
+        //    using (DataTable dt = new DataTable())
+        //    {
+        //        //string sFileName = "JobListExport-" + System.DateTime.Now.Date + ".xlsx";
+        //        //sFileName = sFileName.Replace("/", "");
+        //        sda.Fill(dt);
+        //        string _vDate1 = DateTime.Now.ToString().Replace("/", "").Replace(":", "").Replace(" ", "");
+
+        //        using (XLWorkbook wb = new XLWorkbook())
+        //        {
+        //            wb.Worksheets.Add(dt, "Data Master Employees");
+        //            Response.Clear();
+        //            Response.Buffer = true;
+        //            Response.Charset = "";
+        //            //Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        //            //Response.AddHeader("content-disposition", "attachment; filename=JoblistExport.xlsx");
+        //            Response.ClearContent();
+        //            Response.AppendHeader("content-disposition", "attachment; filename=" + "Data Master Employees" + "_" + _vDate1 + ".xlsx");
+        //            Response.ContentType = "application/excel";
+        //            using (MemoryStream MyMemoryStream = new MemoryStream())
+        //            {
+        //                wb.SaveAs(MyMemoryStream);
+        //                MyMemoryStream.WriteTo(Response.OutputStream);
+        //                Response.Flush();
+        //                Response.End();
+        //            }
+        //        }
+        //    }
+        //}
 
         //protected void btnHistoriMutasi_Click(object sender, EventArgs e)
         //{
@@ -2539,11 +3493,13 @@ namespace hris_ylid
         }
         protected void DownloadTemplete_Click(object sender, EventArgs e)
         {
+            
             string filePath = Path.GetFileName(Server.MapPath("~/TemplateImportExcel/Template Import Data Employees.xlsx"));
             Response.ContentType = "Application/x-msexcel";
             Response.AppendHeader("Content-Disposition", "attachment;filename=" + Path.GetFileName(filePath));
             Response.TransmitFile(Server.MapPath("~/TemplateImportExcel/Template Import Data Employees.xlsx"));
             Response.End();
+
         }
         //private void BindGridEmergencyContact()
         //{

@@ -105,6 +105,48 @@
                 background-color: #06183d;
                 color: white;
             }
+
+
+            
+        .dataTables_filter input {
+            border: 3px solid darkblue !important;
+            background-color: #f0f8ff !important;
+            padding: 6px 10px !important;
+            font-weight: bold !important;
+            height:20px;
+        }
+     
+        /* Tambahan efek saat fokus */
+        .dataTables_filter input:focus {
+            outline: none;
+            border-color: midnightblue !important; /* biru terang */
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        }
+
+        /* Styling dropdown "Show entries" */
+    .dataTables_length select {
+        border: 3px solid darkblue !important;
+        background-color: #f0f8ff !important;
+        padding: 4px 8px !important;
+        font-weight: bold !important;
+        height: 32px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Efek saat fokus */
+    .dataTables_length select:focus {
+        outline: none;
+        border-color: midnightblue !important;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+    }
+
+
+    .dataTables_filter input,
+    .dataTables_length select {
+        height: 32px;
+    }
+
     </style>
     <script>
         function showSucces() {
@@ -449,9 +491,10 @@
                                                                         <div class='input-group'>
                                                                             <asp:DropDownList ID="ddlSuratPeringatan" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true" runat="server">
                                                                                 <asp:ListItem Enabled="true" Text="" Value="-1"></asp:ListItem>
-                                                                                <asp:ListItem Text="Surat Peringatan 1" Value="SP1"></asp:ListItem>
-                                                                                <asp:ListItem Text="Surat Peringatan 2" Value="SP2"></asp:ListItem>
-                                                                                <asp:ListItem Text="Surat Peringatan 3" Value="SP3"></asp:ListItem>
+                                                                                <asp:ListItem Text="Warning letter 1" Value="SP1"></asp:ListItem>
+                                                                                <asp:ListItem Text="Warning letter 2" Value="SP2"></asp:ListItem>
+                                                                                <asp:ListItem Text="Warning letter 3" Value="SP3"></asp:ListItem>
+                                                                                <asp:ListItem Text="Verbal Warning" Value="SP3"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                     </div>

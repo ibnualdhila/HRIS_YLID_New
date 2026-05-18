@@ -248,6 +248,7 @@
     <Content Include="css\style.css" />
     <Content Include="css\timeout-dialog.css" />
     <Content Include="division.aspx" />
+    <Content Include="DownloadImportLog.aspx" />
     <Content Include="email_reminder_hris.aspx" />
     <Content Include="employeess.aspx" />
     <Content Include="employeess_detail.aspx" />
@@ -13071,6 +13072,9 @@
     <Content Include="vendors\switchery\package.js" />
     <Content Include="vendors\switchery\switchery.css" />
     <Content Include="vendors\switchery\switchery.js" />
+    <Content Include="vendors\toastify\toastify-es.js" />
+    <Content Include="vendors\toastify\toastify.css" />
+    <Content Include="vendors\toastify\toastify.js" />
     <Content Include="vendors\transitionize\dist\transitionize.js" />
     <Content Include="vendors\transitionize\dist\transitionize.min.js" />
     <Content Include="vendors\transitionize\examples\browserify.js" />
@@ -13111,6 +13115,13 @@
     </Compile>
     <Compile Include="division.aspx.designer.cs">
       <DependentUpon>division.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DownloadImportLog.aspx.cs">
+      <DependentUpon>DownloadImportLog.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DownloadImportLog.aspx.designer.cs">
+      <DependentUpon>DownloadImportLog.aspx</DependentUpon>
     </Compile>
     <Compile Include="email_reminder_hris.aspx.cs">
       <DependentUpon>email_reminder_hris.aspx</DependentUpon>
