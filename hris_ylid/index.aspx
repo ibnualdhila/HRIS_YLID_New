@@ -433,7 +433,7 @@
                             </button>
                             <asp:Button runat="server" Style="display: none;" ID="btnGenerateExcelTraining" OnClick="btnGenerateExcelTraining_Click"></asp:Button>
                             <div class="table-responsive">
-                                <asp:GridView ID="TableViewTraining" runat="server" CssClass="table table-striped row-border order-column table-bordered zero-configuration text-nowrap" AutoGenerateColumns="False" Style="width: 100%"
+                                <asp:GridView ID="TableViewTraining" runat="server" CssClass="table table-striped row-border order-column table-bordered zero-configuration text-nowrap grid" AutoGenerateColumns="False" Style="width: 100%"
                                     ShowHeaderWhenEmpty="true" EmptyDataText="No Record Found">
                                     <HeaderStyle BackColor="#06183d" ForeColor="White" />
                                     <Columns>
@@ -498,7 +498,7 @@
                             </button>
                             <asp:Button runat="server" Style="display: none;" ID="btnGenerateExcel" OnClick="btnGenerateExcel_Click"></asp:Button>
                             <div class="table-responsive">
-                                <asp:GridView ID="TableViewUserTraining" runat="server" CssClass="table table-striped row-border order-column table-bordered zero-configuration text-nowrap" AutoGenerateColumns="False" Style="width: 100%"
+                                <asp:GridView ID="TableViewUserTraining" runat="server" CssClass="table table-striped row-border order-column table-bordered zero-configuration text-nowrap grid" AutoGenerateColumns="False" Style="width: 100%"
                                     ShowHeaderWhenEmpty="true" EmptyDataText="No Record Found">
                                     <HeaderStyle BackColor="#06183d" ForeColor="White" />
                                     <Columns>
@@ -993,7 +993,13 @@
                     scrollY: "500px",
                     scrollX: true,
                     scrollCollapse: true,
-                    paging: true
+                    paging: true,
+                    columnDefs: [
+                        {
+                            targets: '_all',
+                            render: dateFormatRender
+                        }
+                    ],
                     //fixedColumns: {
                     //	left: 2
                     //}

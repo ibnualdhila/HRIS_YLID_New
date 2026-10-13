@@ -51,7 +51,7 @@ namespace hris_ylid
             string domain = "ylid.local";
             
             string domainAndUsername = domain + @"\" + username;
-            DirectoryEntry entry = new DirectoryEntry("LDAP://DC=ylid,DC=local", domainAndUsername, password);
+            DirectoryEntry entry = new DirectoryEntry("LDAP://DC=ylid,DC=local", domainAndUsername, password, AuthenticationTypes.Secure);
 
 
 
@@ -60,7 +60,8 @@ namespace hris_ylid
                 // Bind to the native AdsObject to force authentication:
 
                 DirectorySearcher search = new DirectorySearcher(entry);
-                search.Filter = "(sAMAccountName=" + username + ")";
+                //search.Filter = "(sAMAccountName=" + username + ")";
+                search.Filter = $"(sAMAccountName={EscapeLdapFilter(username)})";
                 search.PropertiesToLoad.Add("cn");
                 
                 SearchResult result = search.FindOne();
@@ -78,6 +79,16 @@ namespace hris_ylid
 
         }
 
+
+        private static string EscapeLdapFilter(string value)
+        {
+            return value
+                .Replace("\\", "\\5c")
+                .Replace("*", "\\2a")
+                .Replace("(", "\\28")
+                .Replace(")", "\\29")
+                .Replace("\0", "\\00");
+        }
         public bool CheckUser(string username, string password, int _vFlag)
         {
             string path = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;

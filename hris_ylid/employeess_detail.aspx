@@ -147,6 +147,10 @@
         height: 32px;
     }
 
+    .input-error {
+        border: 2px solid red !important;
+    }
+  
     </style>
     <script>
         function showSucces() {
@@ -191,7 +195,7 @@
         }
     </script>
     <link href="vendors/sweetalert.css" rel="stylesheet" />
-    <script type="text/javascript">
+<%--    <script type="text/javascript">
         function Func() {
             swal({
                 title: 'Update Success',
@@ -205,6 +209,26 @@
                     window.location.href = 'employeess.aspx';
                 }
             );
+        }
+    </script>--%>
+    <script type="text/javascript">
+        function Func() {
+
+            var employeeID = document.getElementById('<%= lblEmployeeID.ClientID %>').value;
+
+            swal({
+                title: 'Update Success',
+                text: 'Data Employee Successfully Updated',
+                timer: '2000',
+                type: 'success',
+                showConfirmButton: false,
+                html: true
+            },
+                function () {
+
+                    window.location.href = 'employeess_detail.aspx?EmployeeID=' + employeeID;
+
+                });
         }
     </script>
     <script type="text/javascript">
@@ -314,6 +338,11 @@
         function FailedSave() {
             swal('Save Failed!', 'No data is saved', 'error');
         }
+
+        function FailedMustBeImage() {
+            swal('Change Failed!', 'File must be .jpg , jpeg, .png', 'error');
+        }
+        
     </script>
 
 <%--    <script type="text/javascript">
@@ -486,10 +515,10 @@
                                                                     <br />
                                                                 </div>
                                                                 <div class='col-sm-2'>
-                                                                    Surat Peringatan
+                                                                    Type Of Warning
                                                                     <div class="form-group">
                                                                         <div class='input-group'>
-                                                                            <asp:DropDownList ID="ddlSuratPeringatan" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true" runat="server">
+                                                                            <asp:DropDownList ID="ddlSuratPeringatan" clientidmode="Static" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true" runat="server">
                                                                                 <asp:ListItem Enabled="true" Text="" Value="-1"></asp:ListItem>
                                                                                 <asp:ListItem Text="Warning letter 1" Value="SP1"></asp:ListItem>
                                                                                 <asp:ListItem Text="Warning letter 2" Value="SP2"></asp:ListItem>
@@ -503,7 +532,7 @@
                                                                     Start Date
                                                                     <div class="form-group">
                                                                         <div class='input-group'>
-                                                                            <input type="text" id="txtStartDateSP" data-validate-length-range="5,15" runat="server" class="form-control input-rounded datepicker1" placeholder="From Date">
+                                                                            <input type="text" id="txtStartDateSP" data-validate-length-range="5,15" runat="server"  clientidmode="Static" class="form-control input-rounded datepicker1" placeholder="From Date">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -511,7 +540,7 @@
                                                                     End Date
                                                                     <div class="form-group">
                                                                         <div class='input-group'>
-                                                                            <input type="text" id="txtEndDateSP" data-validate-length-range="5,15" runat="server" class="form-control input-rounded datepicker1" placeholder="End Date">
+                                                                            <input type="text" id="txtEndDateSP" data-validate-length-range="5,15" runat="server" clientidmode="Static" class="form-control input-rounded datepicker1" placeholder="End Date">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -519,7 +548,7 @@
                                                                     Remark
                                                                     <div class="form-group">
                                                                         <div class='input-group'>
-                                                                            <input runat="server" id="txtRemarkSP" data-validate-length-range="5,15" type="text" class="form-control input-rounded" placeholder="Remark">
+                                                                            <input runat="server" id="txtRemarkSP" data-validate-length-range="5,15" type="text" clientidmode="Static" class="form-control input-rounded" placeholder="Remark">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -527,7 +556,7 @@
                                                                     Active
                                                                     <div class="form-group">
                                                                         <div class='input-group'>
-                                                                            <asp:DropDownList ID="ddlActiveSP" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true" runat="server">
+                                                                            <asp:DropDownList ID="ddlActiveSP"  clientidmode="Static" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true" runat="server">
                                                                                 <asp:ListItem Enabled="true" Text="Non Active" Value="0"></asp:ListItem>
                                                                                 <asp:ListItem Text="Active" Value="1"></asp:ListItem>
                                                                             </asp:DropDownList>
@@ -538,8 +567,25 @@
                                                             <div class="row">
                                                                 <div class='col-sm-12'>
                                                                     <div class="form-group d-flex gap-2" style="display: flex; gap: 10px;">
-                                                                        <asp:Button runat="server" ID="btnNewSP" CssClass="btn buttonColor" Text="New" OnClick="btnNewSP_Click" Style="min-width: 120px;" />
-                                                                        <asp:Button runat="server" ID="btnUpdateSP" CssClass="btn buttonColor" Text="Update" OnClick="btnUpdateSP_Click" Style="min-width: 120px;" />
+                                                                        <%--<asp:Button runat="server" ID="btnNewSP" CssClass="btn buttonColor" Text="New" OnClick="btnNewSP_Click" Style="min-width: 120px;" />--%>
+                                                                        <asp:Button 
+                                                                            runat="server" 
+                                                                            ID="btnNewSP" 
+                                                                            CssClass="btn buttonColor" 
+                                                                            Text="New"
+                                                                            UseSubmitBehavior="false"
+                                                                            OnClientClick="clearWarningletters(); return false;"
+                                                                            Style="min-width: 120px;" />
+
+                                                                        <%--<asp:Button runat="server" ID="btnUpdateSP" CssClass="btn buttonColor" Text="Update" OnClick="btnUpdateSP_Click" Style="min-width: 120px;" />--%>
+                                                                        <asp:Button 
+                                                                            runat="server" 
+                                                                            ID="btnUpdateSP" 
+                                                                            CssClass="btn buttonColor" 
+                                                                            Text="Update" 
+                                                                            OnClick="btnUpdateSP_Click"
+                                                                            OnClientClick="return validateWarningletters();"
+                                                                            Style="min-width: 120px;" />                                         
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -586,7 +632,7 @@
                                                                             </asp:TemplateField>
                                                                             
                                                                             <asp:BoundField DataField="oid" HeaderText="oid" visible="false"/>
-                                                                            <asp:BoundField DataField="SuratPeringatan" HeaderText="Surat Peringatan" />
+                                                                            <asp:BoundField DataField="SuratPeringatan" HeaderText="Type Of Warnin" />
                                                                             <asp:BoundField DataField="StartDate" HeaderText="Start Date" />
                                                                             <asp:BoundField DataField="EndDate" HeaderText="End Date" />
                                                                             <asp:BoundField DataField="Remarks" HeaderText="Remarks" />
@@ -908,9 +954,9 @@
                                                                         <div class='input-group'>
                                                                             <asp:DropDownList ID="ddlGender" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true"
                                                                                 runat="server" OnSelectedIndexChanged="ddlGender_SelectedIndexChanged">
-                                                                                <asp:ListItem Enabled="true" Text="<Select Value>" Value="-1"></asp:ListItem>
-                                                                                <asp:ListItem Text="Male" Value="1"></asp:ListItem>
-                                                                                <asp:ListItem Text="Female" Value="2"></asp:ListItem>
+                                                                                <asp:ListItem Enabled="true" Text="" Value="-1"></asp:ListItem>
+                                                                                <asp:ListItem Text="Male" Value="MALE"></asp:ListItem>
+                                                                                <asp:ListItem Text="Female" Value="FEMALE"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                     </div>
@@ -921,7 +967,7 @@
                                                                         <div class='input-group'>
                                                                             <asp:DropDownList ID="ddlBloodType" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true"
                                                                                 runat="server" OnSelectedIndexChanged="ddlBloodType_SelectedIndexChanged">
-                                                                                <asp:ListItem Enabled="true" Text="<Select Value>" Value="-1"></asp:ListItem>
+                                                                                <asp:ListItem Enabled="true" Text="" Value="-1"></asp:ListItem>
                                                                                 <asp:ListItem Text="A" Value="1"></asp:ListItem>
                                                                                 <asp:ListItem Text="B" Value="2"></asp:ListItem>
                                                                                 <asp:ListItem Text="AB" Value="3"></asp:ListItem>
@@ -1029,7 +1075,7 @@
                                                                         <div class='input-group'>
                                                                             <asp:DropDownList ID="ddlMaritalStatus" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true"
                                                                                 runat="server">
-                                                                                <asp:ListItem Enabled="true" Text="<Select Value>" Value="-1"></asp:ListItem>
+                                                                                <asp:ListItem Enabled="true" Text="" Value="-1"></asp:ListItem>
                                                                                 <asp:ListItem Text="Single" Value="1"></asp:ListItem>
                                                                                 <asp:ListItem Text="Married" Value="2"></asp:ListItem>
                                                                                 <asp:ListItem Text="Divorced" Value="3"></asp:ListItem>
@@ -1044,7 +1090,7 @@
                                                                         <div class='input-group'>
                                                                             <asp:DropDownList ID="ddlReligion" class="selectpicker form-control" data-show-subtext="true" data-live-search="true" AppendDataBoundItems="true"
                                                                                 runat="server" OnSelectedIndexChanged="ddlReligion_SelectedIndexChanged">
-                                                                                <asp:ListItem Enabled="true" Text="<Select Value>" Value="-1"></asp:ListItem>
+                                                                                <asp:ListItem Enabled="true" Text="" Value="-1"></asp:ListItem>
                                                                                 <asp:ListItem Text="Islam" Value="1"></asp:ListItem>
                                                                                 <asp:ListItem Text="Catholic" Value="2"></asp:ListItem>
                                                                                 <asp:ListItem Text="Christian" Value="3"></asp:ListItem>
@@ -1410,8 +1456,25 @@
                                                                 <div class="row">
                                                                     <div class='col-sm-12'>
                                                                         <div class="form-group d-flex gap-2" style="display: flex; gap: 10px;">
-                                                                            <asp:Button runat="server" ID="btnNewEC" CssClass="btn buttonColor" Text="New" OnClick="btnNewEC_Click" Style="min-width: 120px;" />
-                                                                            <asp:Button runat="server" ID="btnUpdateEC" CssClass="btn buttonColor" Text="Update" OnClick="btnUpdateEC_Click" Style="min-width: 120px;" />
+                                                                          <%-- <asp:Button runat="server" ID="btnNewEC" CssClass="btn buttonColor" Text="New" OnClick="btnNewEC_Click" Style="min-width: 120px;" />--%>
+                                                                            <asp:Button 
+                                                                                runat="server" 
+                                                                                ID="btnNewEC" 
+                                                                                CssClass="btn buttonColor" 
+                                                                                Text="New" 
+                                                                                OnClick="btnNewEC_Click"
+                                                                                OnClientClick="clearEmergencyContact(); return false;"
+                                                                                Style="min-width: 120px;"/>
+                                                                           <%-- <asp:Button runat="server" ID="btnUpdateEC" CssClass="btn buttonColor" Text="Update" OnClick="btnUpdateEC_Click" Style="min-width: 120px;" />--%>
+                                                                            <asp:Button 
+                                                                                runat="server" 
+                                                                                ID="btnUpdateEC" 
+                                                                                CssClass="btn buttonColor" 
+                                                                                Text="Update" 
+                                                                                OnClick="btnUpdateEC_Click"
+                                                                                OnClientClick="return validateEmergencyContact();"
+                                                                                Style="min-width: 120px;" />
+                                                                        
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1560,11 +1623,6 @@
                                                                                 <asp:BoundField DataField="Division" HeaderText="Division" ReadOnly="True" />
                                                                                 <asp:BoundField DataField="Section" HeaderText="Section" ReadOnly="True" />
                                                                                 <asp:BoundField DataField="Location" HeaderText="Location" ReadOnly="True" />
-                                                                                <%--                                                    <asp:TemplateField HeaderText="Category">
-                                                                                    <ItemTemplate>
-                                                                                        <%# Eval("Category") %>
-                                                                                    </ItemTemplate>
-                                                                                </asp:TemplateField>--%>
                                                                                 <asp:TemplateField HeaderText="Category">
                                                                                     <ItemTemplate>
                                                                                         <asp:DropDownList ID="ddlCategory" runat="server" CssClass="form-select form-select-sm">
@@ -1574,6 +1632,17 @@
                                                                                             <asp:ListItem Value="Rotation">Rotation</asp:ListItem>
                                                                                             <asp:ListItem Value="Demotion">Demotion</asp:ListItem>
                                                                                         </asp:DropDownList>
+                                                                                    </ItemTemplate>
+                                                                                </asp:TemplateField>
+                                                                                <asp:TemplateField HeaderText="Effective Date">
+                                                                                    <ItemTemplate>
+                                                                                        <asp:TextBox 
+                                                                                            ID="txtEffectiveDate" 
+                                                                                            runat="server" 
+                                                                                            CssClass="form-control form-control-sm"
+                                                                                            Text='<%# Bind("EffectiveDate") %>'
+                                                                                            TextMode="Date">
+                                                                                        </asp:TextBox>
                                                                                     </ItemTemplate>
                                                                                 </asp:TemplateField>
                                                                                 <asp:BoundField DataField="modified_by" HeaderText="Modified by" ReadOnly="True" />
@@ -1653,7 +1722,7 @@
                                                 <div class='col-sm-12'>
                                                     <fieldset class="scheduler-border">
                                                         <legend class="scheduler-border">
-                                                            <asp:Label ID="Label2" runat="server" Text="Surat Peringatan"></asp:Label>
+                                                            <asp:Label ID="Label2" runat="server" Text="Warning Letters"></asp:Label>
                                                         </legend>
                                                         <div class="control-group">
                                                             <div class="row">
@@ -1964,6 +2033,188 @@
             $(".datepicker1").datepicker({ format: 'yyyy/mm/dd', autoclose: true, todayBtn: 'linked' })
         });
     </script>
+
+
+
+
+
+    <script>
+
+        function clearEmergencyContact() {
+
+            $('#txtEmergencyContactName').val('').removeClass('input-error');
+            $('#txtEmergencyContactRelationship').val('').removeClass('input-error');
+            $('#txtEmergencyContactNumber').val('').removeClass('input-error');
+            $('#txtEmergencyContactAddress').val('').removeClass('input-error');
+        }
+
+        function validateEmergencyContact() {
+
+            let isValid = true;
+
+            // remove semua border merah dulu
+            $('#txtEmergencyContactName').removeClass('input-error');
+            $('#txtEmergencyContactRelationship').removeClass('input-error');
+            $('#txtEmergencyContactNumber').removeClass('input-error');
+            $('#txtEmergencyContactAddress').removeClass('input-error');
+
+            // validasi name
+            if ($('#txtEmergencyContactName').val().trim() === '') {
+                $('#txtEmergencyContactName').addClass('input-error');
+                isValid = false;
+            }
+
+            // validasi relationship
+            if ($('#txtEmergencyContactRelationship').val().trim() === '') {
+                $('#txtEmergencyContactRelationship').addClass('input-error');
+                isValid = false;
+            }
+
+            // validasi phone
+            if ($('#txtEmergencyContactNumber').val().trim() === '') {
+                $('#txtEmergencyContactNumber').addClass('input-error');
+                isValid = false;
+            }
+
+            // validasi address
+            if ($('#txtEmergencyContactAddress').val().trim() === '') {
+                $('#txtEmergencyContactAddress').addClass('input-error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                alert('Please complete all required fields');
+            }
+
+            return isValid;
+        }
+
+        // hilangkan border merah saat user mulai isi
+        $(document).ready(function () {
+
+            $('#txtEmergencyContactName, #txtEmergencyContactRelationship, #txtEmergencyContactNumber, #txtEmergencyContactAddress')
+                .on('input', function () {
+
+                    if ($(this).val().trim() !== '') {
+                        $(this).removeClass('input-error');
+                    }
+                });
+
+        });
+</script>
+
+
+
+
+    <script>
+
+        function clearWarningletters() {
+
+            debugger
+            // dropdown SP
+            $('#ddlSuratPeringatan').val('-1');
+
+            if ($('#ddlSuratPeringatan').hasClass('selectpicker')) {
+                $('#ddlSuratPeringatan').selectpicker('refresh');
+            }
+
+            // textbox
+            $('#txtStartDateSP').val('');
+            $('#txtEndDateSP').val('');
+            $('#txtRemarkSP').val('');
+
+            // dropdown active
+            $('#ddlActiveSP').prop('selectedIndex', 0);
+
+            if ($('#ddlActiveSP').hasClass('selectpicker')) {
+                $('#ddlActiveSP').selectpicker('refresh');
+            }
+
+            // remove border merah
+            $('.input-error').removeClass('input-error');
+
+            return false;
+        }
+
+        function validateWarningletters() {
+
+            let isValid = true;
+
+            // reset border merah
+            $('#ddlSuratPeringatan').next('.bootstrap-select').find('.dropdown-toggle').removeClass('input-error');
+            $('#txtStartDateSP').removeClass('input-error');
+            $('#txtEndDateSP').removeClass('input-error');
+            $('#txtRemarkSP').removeClass('input-error');
+            $('#ddlActiveSP').next('.bootstrap-select').find('.dropdown-toggle').removeClass('input-error');
+
+            // warning letters
+            if ($('#ddlSuratPeringatan').val() == '-1') {
+
+                $('#ddlSuratPeringatan')
+                    .next('.bootstrap-select')
+                    .find('.dropdown-toggle')
+                    .addClass('input-error');
+
+                isValid = false;
+            }
+
+            // start date
+            if ($('#txtStartDateSP').val().trim() === '') {
+
+                $('#txtStartDateSP').addClass('input-error');
+                isValid = false;
+            }
+
+            // end date
+            if ($('#txtEndDateSP').val().trim() === '') {
+
+                $('#txtEndDateSP').addClass('input-error');
+                isValid = false;
+            }
+
+            // remark
+            if ($('#txtRemarkSP').val().trim() === '') {
+
+                $('#txtRemarkSP').addClass('input-error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+
+                alert('Please complete all required fields');
+            }
+
+            return isValid;
+        }
+
+        $(document).ready(function () {
+
+            $('#txtStartDateSP, #txtEndDateSP, #txtRemarkSP')
+                .on('input', function () {
+
+                    if ($(this).val().trim() !== '') {
+
+                        $(this).removeClass('input-error');
+                    }
+                });
+
+            $('#ddlSuratPeringatan, #ddlActiveSP')
+                .change(function () {
+
+                    $(this)
+                        .next('.bootstrap-select')
+                        .find('.dropdown-toggle')
+                        .removeClass('input-error');
+                });
+
+        });
+
+</script>
+
+
+
+
+
 
     <script type="text/javascript">
         function addSuratPeringatanRow() {

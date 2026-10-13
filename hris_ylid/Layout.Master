@@ -54,6 +54,7 @@
     <link href="plugins/script_03122025/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="plugins/script_03122025/1.13.6/Datatable/jquery.dataTables.min.js"></script>
     <script src="plugins/script_03122025/3.7.1/jquery-3.7.1.min.js"></script>
+    <script src="Scripts/date-formatter.js"></script>
 
     <style>
         #loadingOverlay{

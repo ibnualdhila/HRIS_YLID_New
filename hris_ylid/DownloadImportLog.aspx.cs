@@ -30,6 +30,8 @@ namespace hris_ylid
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             if (Session["ImportLog"] != null)
             {
                 DataTable dtLog = (DataTable)Session["ImportLog"];

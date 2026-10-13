@@ -2316,6 +2316,20 @@ namespace hris_ylid
             {
                 using (var wb = new XLWorkbook(path))
                 {
+
+                    string templatePath = Server.MapPath("~/TemplateImportExcel/Template Import Data Employees.xlsx");
+
+                    var templateErrors = ValidateExcelTemplate(wb, templatePath);
+
+                    if (templateErrors.Any())
+                    {
+                        Session["ImportError"] = string.Join("<br>", templateErrors);
+                        Response.Redirect(Request.RawUrl, false);
+                        Context.ApplicationInstance.CompleteRequest();
+                        return;
+                    }
+
+
                     DataTable dtRawEmployee = ReadSheet(wb, "Employee detail");
                     DataTable dtRawPersonalinfo = ReadSheet(wb, "Personal information");
                     DataTable dtEducationinfo = ReadSheet(wb, "Education information");
@@ -2335,6 +2349,8 @@ namespace hris_ylid
 
 
                     List<string> validationErrors = new List<string>();
+
+
 
 
                     /* =========================================================
@@ -2644,7 +2660,102 @@ namespace hris_ylid
 
         }
 
- 
+        private List<string> ValidateExcelTemplate( XLWorkbook uploadedWb, string templatePath)
+        {
+            List<string> errors = new List<string>();
+
+            using (var templateWb = new XLWorkbook(templatePath))
+            {
+                foreach (var templateSheet in templateWb.Worksheets)
+                {
+                    string sheetName = templateSheet.Name;
+
+                    var uploadedSheet =
+                        uploadedWb.Worksheets
+                        .FirstOrDefault(x =>
+                            x.Name.Trim()
+                            .Equals(sheetName,
+                            StringComparison.OrdinalIgnoreCase));
+
+
+
+                    /* =========================================
+                       SHEET TIDAK ADA
+                    ========================================= */
+
+                    if (uploadedSheet == null)
+                    {
+                        errors.Add(
+                            $"Sheet '{sheetName}' not found.");
+                        continue;
+                    }
+
+
+                    /* =========================================
+                       AMBIL HEADER TEMPLATE
+                    ========================================= */
+
+                    var templateHeaders =
+                        templateSheet.Row(1)
+                        .CellsUsed()
+                        .Select(x => x.GetString().Trim())
+                        .ToList();
+
+
+                    /* =========================================
+                       AMBIL HEADER UPLOAD
+                    ========================================= */
+
+                    var uploadedHeaders =
+                        uploadedSheet.Row(1)
+                        .CellsUsed()
+                        .Select(x => x.GetString().Trim())
+                        .ToList();
+
+                    /* =========================================
+                       HEADER COUNT BERBEDA
+                    ========================================= */
+
+                    if (templateHeaders.Count != uploadedHeaders.Count)
+                    {
+                        errors.Add(  $"Sheet '{sheetName}' column count mismatch.");
+                    }
+
+                    /* =========================================
+                       HEADER VALIDATION
+                    ========================================= */
+
+                    foreach (string header in templateHeaders)
+                    {
+                        if (!uploadedHeaders.Any(x =>
+                            x.Equals(header,
+                            StringComparison.OrdinalIgnoreCase)))
+                        {
+                            errors.Add(
+                                $"Sheet '{sheetName}' missing column '{header}'.");
+                        }
+                    }
+
+
+                    /* =========================================
+                       DUPLICATE HEADER
+                    ========================================= */
+
+                    var duplicates =
+                        uploadedHeaders
+                        .GroupBy(x => x.ToLower())
+                        .Where(x => x.Count() > 1)
+                        .Select(x => x.Key);
+
+                    foreach (var dup in duplicates)
+                    {
+                        errors.Add(  $"Sheet '{sheetName}' duplicate column '{dup}'.");
+                    }
+                }
+            }
+
+            return errors;
+        }
 
         private DataTable ReadSheet(XLWorkbook wb, string sheetName)
         {
@@ -3282,7 +3393,7 @@ namespace hris_ylid
 
                 Session["ExportMasterEmployee"] = ds;
                 Session["ImportSuccess"] = "Import successfully";
-
+                Session["ImportLog"] = null;
 
                 Response.Redirect(Request.RawUrl, false);
                 Context.ApplicationInstance.CompleteRequest();

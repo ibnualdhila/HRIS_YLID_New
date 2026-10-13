@@ -53,8 +53,11 @@ namespace hris_ylid
                 GetReportPositionName();
                 GetLocation();
                 GetInstitutionName();
+                GetCity();
+                GetProvince();
+                GetNationality();
 
-                
+
 
                 // BindDataTableCandidateJoined();
 
@@ -81,7 +84,7 @@ namespace hris_ylid
                 txtEditHeaderEmployeePersonalInfo.Text = lblFlagSave.Value;
                 txtEditHeaderCareerHistory.Text = lblFlagSave.Value;
                 txtEditHeaderEmergencyContact.Text = lblFlagSave.Value;
-                txtEditHeaderWarningLetters.Text = "Surat Peringatan";
+                txtEditHeaderWarningLetters.Text = "Warning Letters";
 
                 txtCreateBy.Value = Session["Fullname"].ToString();
                 txtCreateDate.Value = DateTime.Now.ToString();
@@ -262,20 +265,106 @@ namespace hris_ylid
                         ddlReportPosition.SelectedItem.Text = "";
                     }
 
+                    if (dr["Id_nationality"] != null && dr["Id_nationality"].ToString() != "&nbsp;" && dr["Id_nationality"].ToString().Length > 0)  //row.Cells[23].Text != "&nbsp;")
+                    {
+                        ddlNationality.SelectedValue = dr["Id_nationality"].ToString(); // row.Cells[23].Text;
+                    }
+                    else
+                    {
+                        ddlNationality.SelectedValue = "00000000-0000-0000-0000-000000000000";
+                    }
+
+
+
+                    if (dr["Id_Province"] != null && dr["Id_Province"].ToString() != "&nbsp;" && dr["Id_Province"].ToString().Length > 0)  //row.Cells[23].Text != "&nbsp;")
+                    {
+                        ddlProvince.SelectedValue = dr["Id_Province"].ToString(); // row.Cells[23].Text;
+                    }
+                    else
+                    {
+                        ddlProvince.SelectedValue = "00000000-0000-0000-0000-000000000000";
+                    }
+
+
+                    if (dr["Id_City"] != null && dr["Id_City"].ToString() != "&nbsp;" && dr["Id_City"].ToString().Length > 0)  //row.Cells[23].Text != "&nbsp;")
+                    {
+                        ddlCity.SelectedValue = dr["Id_City"].ToString(); // row.Cells[23].Text;
+                    }
+                    else
+                    {
+                        ddlCity.SelectedValue = "00000000-0000-0000-0000-000000000000";
+                    }
+
+
+
+                    if (dr["City"] != null && dr["City"].ToString() != "&nbsp;" &&  dr["City"].ToString().Length > 0) {
+                        
+                        ddlCity.SelectedItem.Text = dr["City"].ToString(); 
+                    
+                    }
+                    else
+                    {
+                        ddlCity.SelectedItem.Text = "";
+                    }
+                    if (dr["Province"] != null && dr["Province"].ToString() != "&nbsp;" &&  dr["Province"].ToString().Length > 0) {
+
+                        ddlProvince.SelectedItem.Text = dr["Province"].ToString();
+
+                    }
+                    else 
+                    {                        
+                        ddlProvince.SelectedItem.Text = "";
+                    
+                    }
+                    if (dr["Nationality"] != null && dr["Nationality"].ToString() != "&nbsp;" && dr["Nationality"].ToString().Length > 0)
+                    {
+
+                        ddlNationality.SelectedItem.Text = dr["Nationality"].ToString();
+
+                    }else
+                    {
+                        ddlNationality.SelectedItem.Text = "";
+                    }
+
+
                     txtAddress.Value = dr["address"].ToString(); //row.Cells[27].Text;
                     txtDomicile.Value = dr["domicile"].ToString(); //row.Cells[28].Text;
                     txtBPjamsostekNumber.Value = dr["id_bpjamsostek"].ToString(); //row.Cells[29].Text;
                     txtBPJSKesehatanNo.Value = dr["BPJSKSNo"].ToString();
                     txtNPWP.Value = dr["NPWPNo"].ToString();
                     txtWorkingEmail.Value = dr["WorkingEmail"].ToString();
-                    if (dr["SourceOfHire"] != null && dr["SourceOfHire"].ToString() != "&nbsp;") //row.Cells[12].Text != "&nbsp;")
+
+                    //if (dr["SourceOfHire"] != null && dr["SourceOfHire"].ToString() != "&nbsp;") //row.Cells[12].Text != "&nbsp;")
+                    //{
+                    //    ddlSourceOfHire.SelectedItem.Text = dr["SourceOfHire"].ToString(); // row.Cells[12].Text;
+                    //}
+                    //else
+                    //{
+                    //    ddlSourceOfHire.SelectedItem.Text = "";
+                    //}
+
+
+                    string SourceOfHire = dr["SourceOfHire"].ToString();
+
+                    ListItem SourceOfHireitem = ddlSourceOfHire.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(SourceOfHire, StringComparison.OrdinalIgnoreCase));
+
+                    if (SourceOfHireitem != null)
                     {
-                        ddlSourceOfHire.SelectedItem.Text = dr["SourceOfHire"].ToString(); // row.Cells[12].Text;
+                        ddlSourceOfHire.ClearSelection();
+                        SourceOfHireitem.Selected = true;
                     }
                     else
                     {
-                        ddlSourceOfHire.SelectedItem.Text = "";
+                        ddlSourceOfHire.SelectedIndex = 0;
                     }
+
+
+
+
+
                     txtBankName.Value = dr["BankName"].ToString();
                     txtBankAccountNo.Value = dr["BankAccount"].ToString();
                     txtBankAccountName.Value = dr["BankAccountName"].ToString();
@@ -286,27 +375,173 @@ namespace hris_ylid
                     txtPOB.Value = dr["POB"].ToString();  // row.Cells[12].Text; 
                                                           //if (dr["Gender"].ToString().Length > 0) { ddlGender.SelectedItem.Text = dr["Gender"].ToString(); }
 
-                    if (dr["Gender"].ToString().Length > 0) { if (dr["Gender"].ToString().Substring(0, 4) != "<Sel") { ddlGender.SelectedItem.Text = dr["Gender"].ToString(); }; }
-                    if (dr["BloodType"].ToString().Length > 0) { if (dr["BloodType"].ToString().Substring(0, 1) != "<") { ddlBloodType.SelectedItem.Text = dr["BloodType"].ToString(); }; }
+                    //if (dr["Gender"].ToString().Length > 0) { if (dr["Gender"].ToString().Substring(0, 4) != "<Sel") { ddlGender.SelectedItem.Text = dr["Gender"].ToString(); }; }
 
-                    if (dr["status"].ToString().Length > 0) { ddlStatus.SelectedItem.Text = dr["status"].ToString(); } //row.Cells[3].Text;
-                    if (dr["category"].ToString().Length > 0) { ddlCategory.SelectedItem.Text = dr["category"].ToString(); } //row.Cells[4].Text;
-                    if (dr["Nationality"].ToString().Length > 0) { ddlNationality.SelectedItem.Text = dr["Nationality"].ToString(); }
+                    string gender = dr["Gender"].ToString();
+
+                    ListItem item = ddlGender.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(gender, StringComparison.OrdinalIgnoreCase));
+
+                    if (item != null)
+                    {
+                        ddlGender.ClearSelection();
+                        item.Selected = true;
+                    }
+                    else
+                    {
+                        ddlGender.SelectedIndex = 0;
+                    }
+
+
+
+                    //if (dr["BloodType"].ToString().Length > 0) { if (dr["BloodType"].ToString().Substring(0, 1) != "<") { ddlBloodType.SelectedItem.Text = dr["BloodType"].ToString(); }; }
+
+
+                    string blood = dr["BloodType"].ToString();
+
+                    ListItem blooditem = ddlBloodType.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(blood, StringComparison.OrdinalIgnoreCase));
+
+                    if (blooditem != null)
+                    {
+                        ddlBloodType.ClearSelection();
+                        blooditem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlBloodType.SelectedIndex = 0;
+                    }
+
+                    //if (dr["status"].ToString().Length > 0) { ddlStatus.SelectedItem.Text = dr["status"].ToString(); } //row.Cells[3].Text;
+
+                    string sts = dr["status"].ToString();
+                    ListItem stsitem = ddlStatus.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(sts, StringComparison.OrdinalIgnoreCase));
+
+                    if (stsitem != null)
+                    {
+                        ddlStatus.ClearSelection();
+                        stsitem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlStatus.SelectedIndex = 0;
+                    }
+
+
+                    //if (dr["category"].ToString().Length > 0) { ddlCategory.SelectedItem.Text = dr["category"].ToString(); } //row.Cells[4].Text;
+                    string category = dr["category"].ToString();
+                    ListItem categoryitem = ddlCategory.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(category, StringComparison.OrdinalIgnoreCase));
+
+                    if (categoryitem != null)
+                    {
+                        ddlCategory.ClearSelection();
+                        categoryitem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlCategory.SelectedIndex = 0;
+                    }
+
                     txtPostalCode.Value = dr["PostalCode"].ToString(); // row.Cells[26].Text;
                     hlbKTP.Value = dr["id_ktp"].ToString(); // row.Cells[14].Text;
-                    if (dr["City"].ToString().Length > 0) { ddlCity.SelectedItem.Text = dr["City"].ToString(); }
-                    if (dr["Province"].ToString().Length > 0) { ddlProvince.SelectedItem.Text = dr["Province"].ToString(); }
+                   
                     txtMobilePhone.Value = dr["MobilePhone"].ToString();
                     //txtEmergencyContact.Value = dr["EmergencyContactNumber"].ToString();
                     txtPersonalEmail.Value = dr["PersonalEmail"].ToString();
                     txtFamilyCard.Value = dr["FamilyCardNumber"].ToString();
-                    if (dr["MaritalStatus"].ToString().Length > 0) { if (dr["MaritalStatus"].ToString().Substring(0, 4) != "<Sel") { ddlMaritalStatus.SelectedItem.Text = dr["MaritalStatus"].ToString(); }; }
-                    if (dr["ReligioN"].ToString().Length > 0) { if (dr["ReligioN"].ToString().Substring(0, 4) != "<Sel") { ddlReligion.SelectedItem.Text = dr["ReligioN"].ToString(); }; }
 
-                    if (dr["Education1"].ToString().Length > 0) { if (dr["Education1"].ToString().Substring(0, 4) != "<Sel") { ddlEducation1.SelectedItem.Text = dr["Education1"].ToString(); }; }
+                    //if (dr["MaritalStatus"].ToString().Length > 0) { if (dr["MaritalStatus"].ToString().Substring(0, 4) != "<Sel") { ddlMaritalStatus.SelectedItem.Text = dr["MaritalStatus"].ToString(); }; }
+
+                    string martial = dr["MaritalStatus"].ToString();
+
+                    ListItem martialitem = ddlMaritalStatus.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(martial, StringComparison.OrdinalIgnoreCase));
+
+                    if (martialitem != null)
+                    {
+                        ddlMaritalStatus.ClearSelection();
+                        martialitem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlMaritalStatus.SelectedIndex = 0;
+                    }
+                    //if (dr["ReligioN"].ToString().Length > 0) { if (dr["ReligioN"].ToString().Substring(0, 4) != "<Sel") { ddlReligion.SelectedItem.Text = dr["ReligioN"].ToString(); }; }
+
+                    string religi = dr["ReligioN"].ToString();
+
+                    ListItem religiitem = ddlReligion.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(religi, StringComparison.OrdinalIgnoreCase));
+
+                    if (religiitem != null)
+                    {
+                        ddlReligion.ClearSelection();
+                        religiitem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlReligion.SelectedIndex = 0;
+                    }
+
+
+
+                    //if (dr["Education1"].ToString().Length > 0) { if (dr["Education1"].ToString().Substring(0, 4) != "<Sel") { ddlEducation1.SelectedItem.Text = dr["Education1"].ToString(); }; }
+                    string Education1 = dr["Education1"].ToString();
+
+                    ListItem Education1itm = ddlEducation1.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(Education1, StringComparison.OrdinalIgnoreCase));
+
+                    if (Education1itm != null)
+                    {
+                        ddlEducation1.ClearSelection();
+                        Education1itm.Selected = true;
+                    }
+                    else
+                    {
+                        ddlEducation1.SelectedIndex = 0;
+                    }
+
                     txtMajor1.Value = dr["Major1"].ToString();
                     txtInstitute1.Value = dr["Institute1"].ToString();
+                    
+                    
                     if (dr["Education2"].ToString().Length > 0) { if (dr["Education2"].ToString().Substring(0, 4) != "<Sel") { ddlEducation2.SelectedItem.Text = dr["Education2"].ToString(); }; }
+
+                    string Education2 = dr["Education2"].ToString();
+
+                    ListItem Education2itm = ddlEducation2.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(Education2, StringComparison.OrdinalIgnoreCase));
+
+                    if (Education2itm != null)
+                    {
+                        ddlEducation2.ClearSelection();
+                        Education2itm.Selected = true;
+                    }
+                    else
+                    {
+                        ddlEducation2.SelectedIndex = 0;
+                    }
+
+
+
                     txtMajor2.Value = dr["Major2"].ToString();
                     txtInstitute2.Value = dr["Institute2"].ToString();
 
@@ -336,10 +571,43 @@ namespace hris_ylid
 
                     if (dr["EffectiveEndDate"].ToString().Length > 0 && Convert.ToDateTime(dr["EffectiveEndDate"]).Year > 1900) { txtEffectiveEndDate.Value = dr["EffectiveEndDate"].ToString(); } //row.Cells[20].Text;
 
-                    if (dr["CareerHistory"].ToString().Length > 0) { ddlCareerHistory.SelectedItem.Text = dr["CareerHistory"].ToString(); }
-                    if (dr["EmployeeSeparation"].ToString().Length > 0) { ddlEmployementSeparation.SelectedItem.Text = dr["EmployeeSeparation"].ToString(); }
+                    //if (dr["CareerHistory"].ToString().Length > 0) { ddlCareerHistory.SelectedItem.Text = dr["CareerHistory"].ToString(); }
+                    string CareerHistory = dr["CareerHistory"].ToString();
+
+                    ListItem CareerHistoryitem = ddlCareerHistory.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(CareerHistory, StringComparison.OrdinalIgnoreCase));
+
+                    if (CareerHistoryitem != null)
+                    {
+                        ddlCareerHistory.ClearSelection();
+                        CareerHistoryitem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlCareerHistory.SelectedIndex = 0;
+                    }
 
 
+                    //if (dr["EmployeeSeparation"].ToString().Length > 0) { ddlEmployementSeparation.SelectedItem.Text = dr["EmployeeSeparation"].ToString(); }
+
+                    string EmployeeSeparation = dr["EmployeeSeparation"].ToString();
+
+                    ListItem EmployeeSeparationitem = ddlEmployementSeparation.Items
+                        .Cast<ListItem>()
+                        .FirstOrDefault(x =>
+                            x.Text.Equals(EmployeeSeparation, StringComparison.OrdinalIgnoreCase));
+
+                    if (EmployeeSeparationitem != null)
+                    {
+                        ddlEmployementSeparation.ClearSelection();
+                        EmployeeSeparationitem.Selected = true;
+                    }
+                    else
+                    {
+                        ddlEmployementSeparation.SelectedIndex = 0;
+                    }
 
                     // Replace this block:
                     //string Fromfile = "~/Photos/" + dr["Photo"].ToString() + ".jpeg";
@@ -730,6 +998,134 @@ namespace hris_ylid
                 Con.Close();
             }
         }
+
+
+
+        protected void GetCity()
+        {
+            ddlCity.Items.Clear();
+            string path = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
+            SqlConnection Con = new SqlConnection(path);
+            SqlCommand sqlcomm = new SqlCommand();
+            sqlcomm.CommandText = "sp_HRIS_DB_Employees";
+            sqlcomm.CommandType = CommandType.StoredProcedure;
+            sqlcomm.Connection = Con;
+            sqlcomm.Parameters.AddWithValue("@StatementType", "City");
+            SqlDataReader dr;
+
+            try
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = "";
+                newItem.Value = "00000000-0000-0000-0000-000000000000";
+                ddlCity.Items.Add(newItem);
+
+                Con.Open();
+                dr = sqlcomm.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    newItem = new ListItem();
+                    newItem.Text = dr["Name"].ToString();
+                    newItem.Value = dr["Oid"].ToString();
+                    ddlCity.Items.Add(newItem);
+                }
+                dr.Close();
+            }
+            catch (Exception err)
+            {
+                string _ErrorMsg = err.Message;
+            }
+            finally
+            {
+                Con.Close();
+            }
+
+        }
+
+
+
+        protected void GetNationality()
+        {
+            ddlNationality.Items.Clear();
+            string path = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
+            SqlConnection Con = new SqlConnection(path);
+            SqlCommand sqlcomm = new SqlCommand();
+            sqlcomm.CommandText = "sp_HRIS_DB_Employees";
+            sqlcomm.CommandType = CommandType.StoredProcedure;
+            sqlcomm.Connection = Con;
+            sqlcomm.Parameters.AddWithValue("@StatementType", "Country");
+            SqlDataReader dr;
+            try
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = "";
+                newItem.Value = "00000000-0000-0000-0000-000000000000";
+                ddlNationality.Items.Add(newItem);
+                Con.Open();
+                dr = sqlcomm.ExecuteReader();
+                while (dr.Read())
+                {
+                    newItem = new ListItem();
+                    newItem.Text = dr["Name"].ToString();
+                    newItem.Value = dr["Oid"].ToString();
+                    ddlNationality.Items.Add(newItem);
+                }
+                dr.Close();
+            }
+            catch (Exception err)
+            {
+                string _ErrorMsg = err.Message;
+            }
+            finally
+            {
+                Con.Close();
+            }
+        }
+
+
+        protected void GetProvince()
+        {
+            ddlProvince.Items.Clear();
+            string path = ConfigurationManager.ConnectionStrings["dbpath"].ConnectionString;
+            SqlConnection Con = new SqlConnection(path);
+            SqlCommand sqlcomm = new SqlCommand();
+            sqlcomm.CommandText = "sp_HRIS_DB_Employees";
+            sqlcomm.CommandType = CommandType.StoredProcedure;
+            sqlcomm.Connection = Con;
+            sqlcomm.Parameters.AddWithValue("@StatementType", "Province");
+            SqlDataReader dr;
+            try
+            {
+                ListItem newItem = new ListItem();
+                newItem.Text = "";
+                newItem.Value = "00000000-0000-0000-0000-000000000000";
+                ddlProvince.Items.Add(newItem);
+                Con.Open();
+                dr = sqlcomm.ExecuteReader();
+                while (dr.Read())
+                {
+                    newItem = new ListItem();
+                    newItem.Text = dr["Name"].ToString();
+                    newItem.Value = dr["Oid"].ToString();
+                    ddlProvince.Items.Add(newItem);
+                }
+                dr.Close();
+            }
+            catch (Exception err)
+            {
+                string _ErrorMsg = err.Message;
+            }
+            finally
+            {
+                Con.Close();
+            }
+        }
+
+
+
+
+
         protected void GetPositionName()
         {
             ddlPosition.Items.Clear();
@@ -1359,6 +1755,21 @@ namespace hris_ylid
                         }
                     }
                 }
+
+                TextBox txtEffectiveDate = (TextBox)e.Row.FindControl("txtEffectiveDate");
+
+                if (txtEffectiveDate != null)
+                {
+                    object effectiveDateObj = DataBinder.Eval(e.Row.DataItem, "EffectiveDate");
+
+                    if (effectiveDateObj != DBNull.Value && effectiveDateObj != null)
+                    {
+                        DateTime effectiveDate = Convert.ToDateTime(effectiveDateObj);
+
+                        // wajib format yyyy-MM-dd untuk input type=date
+                        txtEffectiveDate.Text = effectiveDate.ToString("yyyy-MM-dd");
+                    }
+                }
             }
         }
 
@@ -1429,7 +1840,11 @@ namespace hris_ylid
                 sqlcomm.Parameters.AddWithValue("@join_date", CustomString(txtJoinDate.Value));
                 if (CustomString(txtModifiedBy.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@modifiedby", CustomString(txtModifiedBy.Value)); }
                 if (CustomString(txtCreateDate.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@createdby", CustomString(txtCreateDate.Value)); }
-                sqlcomm.Parameters.AddWithValue("@modified_date", txtModifiedDate.Value);
+                //sqlcomm.Parameters.AddWithValue("@modified_date", txtModifiedDate.Value);
+                //sqlcomm.Parameters.Add("@modified_date", SqlDbType.DateTime).Value = Convert.ToDateTime(txtModifiedDate.Value);
+
+
+            
 
                 if (CustomString(txtAddress.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@address_value", CustomString(txtAddress.Value)); }
                 if (CustomString(txtDomicile.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@domicile_value", CustomString(txtDomicile.Value)); }
@@ -1475,14 +1890,17 @@ namespace hris_ylid
                 if (CustomString(txt2ndChildPOB.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@POB2ndChild_Value", CustomString(txt2ndChildPOB.Value)); }
                 if (CustomString(txtNameOf3rdChild.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@NameOf3rdChild_Value", CustomString(txtNameOf3rdChild.Value)); }
                 if (CustomString(txtNoID3rdChild.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@NoID3rdChild_Value", CustomString(txtNoID3rdChild.Value)); }
-                if (txt2ndChildDOB.Value.Length > 0) { sqlcomm.Parameters.AddWithValue("@DOB3rdChild_Value", txt3rdChildDOB.Value); }
+                if (txt3rdChildDOB.Value.Length > 0) { sqlcomm.Parameters.AddWithValue("@DOB3rdChild_Value", txt3rdChildDOB.Value); }
                 if (CustomString(txt3rdChildPOB.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@POB3rdChild_Value", CustomString(txt3rdChildPOB.Value)); }
                 if (CustomString(txtBPJSKesehatanNo.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@BPJSKSNo_Value", CustomString(txtBPJSKesehatanNo.Value)); }
                 if (CustomString(txtNPWP.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@NPWPNo_Value", CustomString(txtNPWP.Value)); }
                 if (CustomString(txtBankAccountNo.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@BankAccount_Value", CustomString(txtBankAccountNo.Value)); }
                 if (CustomString(txtBankAccountName.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@BankAccountName_Value", CustomString(txtBankAccountName.Value)); }
                 if (CustomString(txtBankName.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@BankName_Value", CustomString(txtBankName.Value)); }
+                
                 if (CustomString(ddlSourceOfHire.SelectedItem.Text.ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@SourceOfHire", CustomString(ddlSourceOfHire.SelectedItem.Text.ToString())); }
+
+
 
                 if (CustomString(ddlCareerHistory.SelectedItem.Text.ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@CareerHistory", CustomString(ddlCareerHistory.SelectedItem.Text.ToString())); }
                 if (CustomString(ddlEmployementSeparation.SelectedItem.Text.ToString()).Length > 0) { sqlcomm.Parameters.AddWithValue("@EmployeeSeparation", CustomString(ddlEmployementSeparation.SelectedItem.Text.ToString())); }
@@ -1491,6 +1909,13 @@ namespace hris_ylid
                 if (CustomString(lblPhoto.Value).Length > 0) { sqlcomm.Parameters.AddWithValue("@Photo", CustomString(lblPhoto.Value)); }
 
                 sqlcomm.Parameters.Add("@EmployeeID_Out", SqlDbType.UniqueIdentifier).Direction = ParameterDirection.Output;
+
+                //foreach(SqlParameter p in sqlcomm.Parameters)
+                //{
+                //    Response.Write(p.ParameterName + " = " + p.Value + "<br>");
+                //}
+
+                //Response.End();
 
                 sqlcomm.ExecuteNonQuery();
 
@@ -1623,6 +2048,7 @@ namespace hris_ylid
                 dtCareerHistory.Columns.Add("Category");
                 dtCareerHistory.Columns.Add("ModifiedBy");
                 dtCareerHistory.Columns.Add("modification_date");
+                dtCareerHistory.Columns.Add("Effectivedate");
 
                 // Loop through GridView rows
                 foreach (GridViewRow row in TableEditCareerHistory.Rows)
@@ -1640,6 +2066,7 @@ namespace hris_ylid
                         dr["Section"] = row.Cells[5].Text.Trim();
                         dr["Location"] = row.Cells[6].Text.Trim();
 
+
                         // If Category is a DropDownList in a TemplateField
                         //DropDownList ddlCategory = row.FindControl("ddlCategory") as DropDownList;
                         //dr["Category"] = ddlCategory != null ? ddlCategory.SelectedValue : row.Cells[7].Text.Trim();
@@ -1654,9 +2081,19 @@ namespace hris_ylid
                             // Optionally handle the case where the control is missing
                             dr["Category"] = string.Empty;
                         }
+                        TextBox txtEffectiveDate = row.FindControl("txtEffectiveDate") as TextBox;
 
+                        if (txtEffectiveDate != null)
+                        {
+                            dr["Effectivedate"] = txtEffectiveDate.Text;
+                        }
+                        else
+                        {
+                            dr["Effectivedate"] = DBNull.Value;
+                        }
                         dr["ModifiedBy"] = row.Cells[8].Text.Trim();
                         dr["modification_date"] = row.Cells[9].Text.Trim();
+                        
 
                         dtCareerHistory.Rows.Add(dr);
                     }
@@ -1670,8 +2107,9 @@ namespace hris_ylid
                         sqlcomm.Parameters.AddWithValue("@StatementType", "UpdateHistoryMutationEmployee");
                         sqlcomm.Parameters.AddWithValue("@id_EmployeeHistory", _vRow["id"]);
                         sqlcomm.Parameters.AddWithValue("@nik", _vRow["nik"]);
-                        sqlcomm.Parameters.AddWithValue("@CareerHistory", _vRow["Category"]); // Pass Category
-                                                                                              // Add other parameters as needed
+                        sqlcomm.Parameters.AddWithValue("@CareerHistory", _vRow["Category"]);// Pass Category
+                                                                                             // Add other parameters as needed
+                        sqlcomm.Parameters.AddWithValue("@EffectiveDate", string.IsNullOrEmpty(_vRow["Effectivedate"].ToString()) ? (object)DBNull.Value : Convert.ToDateTime(_vRow["Effectivedate"]));
                         sqlcomm.ExecuteNonQuery();
                         sqlcomm.Parameters.Clear();
                     }
@@ -1829,57 +2267,96 @@ namespace hris_ylid
                     {
                         foreach (HttpPostedFile postfiles in FileUploadFoto.PostedFiles)
                         {
-                            //Get The File Extension  
-                            //string filetype = Path.GetExtension(postfiles.FileName);
+                            ////Get The File Extension  
+                            ////string filetype = Path.GetExtension(postfiles.FileName);
+                            //string filetype = Path.GetExtension(postfiles.FileName).ToLower();
+                            //if (filetype == ".jpeg" || filetype == ".jpg" || filetype == ".png")
+                            //{
+                            //    //Get The File Size In Bite  
+                            //    double filesize = postfiles.ContentLength;
+                            //    if (filesize < (2048576))
+                            //    {
+                            //        fileuploadcount++;
+                            //        string serverfolder = string.Empty;
+                            //        string serverpath = string.Empty;
+                            //        // Adding File Into Scecific Folder Depend On his Extension
+                            //        switch (filetype)
+                            //        {
+                            //            case ".png":
+                            //            case ".jpeg":
+                            //            case ".jpg":
+                            //                serverfolder = Server.MapPath("~/Photos/");
+                            //                //check Folder avlalible or not  
+                            //                if (!Directory.Exists(serverfolder))
+                            //                {
+                            //                    // create Folder  
+                            //                    Directory.CreateDirectory(serverfolder);
+                            //                }
+                            //                serverpath = serverfolder + lblPhoto.Value + filetype;
+                            //                FileUploadFoto.SaveAs(serverpath);
+                            //                label1.Text += "[" + postfiles.FileName + "]- jpeg/jpg file uploaded successfully<br/>";
+                            //                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modal", "$('#mdlUploadFoto').modal();", true);
+                            //                //BindDataTableEmployees();
+                            //                UploadFotoOK.Value = "OK";
+
+                            //                UpdatePhoto();
+
+                            //                string Fromfile1 = "~/Photos/" + lblPhoto.Value.ToString() + filetype;
+                            //                PhotoUser.ImageUrl = Fromfile1;
+
+                            //                break;
+                            //        }
+                            //    }
+                            //    else
+                            //    {
+                            //        Page.ClientScript.RegisterStartupScript(this.GetType(), "text", "FailedMaxSize();", true);
+                            //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modal", "$('#mdlUploadFoto').modal();", true);
+                            //        //BindDataTableEmployees();
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    Page.ClientScript.RegisterStartupScript(this.GetType(), "text", "FailedMustBePDF();", true);
+                            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modal", "$('#mdlUploadFoto').modal();", true);
+                            //    //BindDataTableEmployees();
+                            //}
+
                             string filetype = Path.GetExtension(postfiles.FileName).ToLower();
-                            if (filetype == ".jpeg" || filetype == ".jpg")
+
+                            string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+
+                            if (allowedExtensions.Contains(filetype))
                             {
-                                //Get The File Size In Bite  
                                 double filesize = postfiles.ContentLength;
-                                if (filesize < (2048576))
+
+                                if (filesize < 2048576) // 2 MB
                                 {
-                                    fileuploadcount++;
-                                    string serverfolder = string.Empty;
-                                    string serverpath = string.Empty;
-                                    // Adding File Into Scecific Folder Depend On his Extension
-                                    switch (filetype)
-                                    { 
-                                        case ".jpeg":
-                                        case ".jpg":
-                                            serverfolder = Server.MapPath("~/Photos/");
-                                            //check Folder avlalible or not  
-                                            if (!Directory.Exists(serverfolder))
-                                            {
-                                                // create Folder  
-                                                Directory.CreateDirectory(serverfolder);
-                                            }
-                                            serverpath = serverfolder + lblPhoto.Value + filetype;
-                                            FileUploadFoto.SaveAs(serverpath);
-                                            label1.Text += "[" + postfiles.FileName + "]- jpeg/jpg file uploaded successfully<br/>";
-                                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modal", "$('#mdlUploadFoto').modal();", true);
-                                            //BindDataTableEmployees();
-                                            UploadFotoOK.Value = "OK";
+                                    string serverfolder = Server.MapPath("~/Photos/");
 
-                                            UpdatePhoto();
-
-                                            string Fromfile1 = "~/Photos/" + lblPhoto.Value.ToString() + filetype;
-                                            PhotoUser.ImageUrl = Fromfile1;
-
-                                            break;
+                                    if (!Directory.Exists(serverfolder))
+                                    {
+                                        Directory.CreateDirectory(serverfolder);
                                     }
+
+                                    string serverpath = Path.Combine(serverfolder, lblPhoto.Value + filetype);
+
+                                    FileUploadFoto.SaveAs(serverpath);
+
+                                    PhotoUser.ImageUrl = "~/Photos/" + lblPhoto.Value + filetype;
+
+                                    UploadFotoOK.Value = "OK";
+                                    UpdatePhoto();
                                 }
                                 else
                                 {
-                                    Page.ClientScript.RegisterStartupScript(this.GetType(), "text", "FailedMaxSize();", true);
-                                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modal", "$('#mdlUploadFoto').modal();", true);
-                                    //BindDataTableEmployees();
+                                    Page.ClientScript.RegisterStartupScript(
+                                        this.GetType(), "text", "FailedMaxSize();", true);
                                 }
                             }
                             else
                             {
-                                Page.ClientScript.RegisterStartupScript(this.GetType(), "text", "FailedMustBePDF();", true);
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modal", "$('#mdlUploadFoto').modal();", true);
-                                //BindDataTableEmployees();
+                                Page.ClientScript.RegisterStartupScript(
+                                    this.GetType(), "text", "FailedMustBeImage();", true);
                             }
                         }
                     }
@@ -2085,6 +2562,8 @@ namespace hris_ylid
                             else
                                 ddlActiveSP.SelectedIndex = 0;
                         }
+
+                     
                     }
                 }
             }
@@ -2107,11 +2586,14 @@ namespace hris_ylid
                             row["ActiveSP"] = "Non Active"; // Mark existing rows for deletion
                         }
 
+                       
                     }
                     // Save and rebind
                     ViewState["SuratPeringatanViewState"] = dt;
                     TableEditSuratPeringatan.DataSource = dt;
                     TableEditSuratPeringatan.DataBind();
+
+
                 }
             }
 
@@ -2123,6 +2605,8 @@ namespace hris_ylid
                 "$('#myTabEmployeeDetail a[href=\"#tabWarningLetters\"]').tab('show');",
                 true
             );
+
+          
         }
         private bool GetActiveSPValue()
         {
@@ -2133,6 +2617,8 @@ namespace hris_ylid
         protected void btnUpdateSP_Click(object sender, EventArgs e)
         {
             // 1. Get the current DataTable from ViewState or create a new one
+
+
             DataTable dt;
             if (ViewState["SuratPeringatanViewState"] != null)
             {
@@ -2235,6 +2721,10 @@ namespace hris_ylid
                 "$('#myTabEmployeeDetail a[href=\"#tabWarningLetters\"]').tab('show');",
                 true
             );
+
+
+
+
         }
 
         protected void btnNewSP_Click(object sender, EventArgs e)
@@ -2281,8 +2771,7 @@ namespace hris_ylid
             if (string.IsNullOrEmpty(oid) && ViewState["EmergencyContactOid"] != null)
             {
                 oid = ViewState["EmergencyContactOid"].ToString();
-            }
-;
+            };
             bool isUpdate = !string.IsNullOrEmpty(oid);
 
             if (isUpdate)
@@ -2322,6 +2811,9 @@ namespace hris_ylid
                 newRow["ContactAddress"] = txtEmergencyContactAddress.Value;
                 newRow["status"] = "new";
                 dt.Rows.InsertAt(newRow, 0);
+
+              
+
             }
 
             // Remove empty row if present (e.g., Oid is null or empty)
@@ -2334,6 +2826,8 @@ namespace hris_ylid
             ViewState["EmergencyContactViewState"] = dt;
             TableEditEmergencyContactNew.DataSource = dt;
             TableEditEmergencyContactNew.DataBind();
+
+
 
             // 4. Optionally, clear the input fields
             lblEmergencyContactID.Value = "";
@@ -2350,6 +2844,8 @@ namespace hris_ylid
                 "$('#myTabEmployeeDetail a[href=\"#tabEmergencyContactNew\"]').tab('show');",
                 true
             );
+
+            
         }
 
         protected void TableEditEmergencyContactNew_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -2428,6 +2924,10 @@ namespace hris_ylid
                         e.Row.BackColor = System.Drawing.Color.DarkOrange;
                     }
                 }
+
+                TableEditEmergencyContactNew.UseAccessibleHeader = true;
+                TableEditEmergencyContactNew.HeaderRow.TableSection = TableRowSection.TableHeader;
+
             }
         }
 

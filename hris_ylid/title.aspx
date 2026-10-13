@@ -363,7 +363,13 @@
                     scrollY: "500px",
                     scrollX: true,
                     scrollCollapse: true,
-                    paging: true
+                    paging: true,
+                    columnDefs: [
+                        {
+                            targets: '_all',
+                            render: dateFormatRender
+                        }
+                    ],
                     //fixedColumns: {
                     //	left: 2
                     //}

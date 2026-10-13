@@ -914,12 +914,12 @@ namespace hris_ylid
                         {
                             subject = "Personal Information Form Received",
                             body = new
-                            {
+                            {   
                                 contentType = "HTML",
                                 content = body
                             },
                             toRecipients = new[] { new { emailAddress = new { address = lbEmailCandidate.Text.Trim() } } },
-                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "mirna.dewi@id.yusen-logistics.com" } } }
+                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yovitapaska.adhisetyarini@id.yusen-logistics.com" } } }
                         },
                         saveToSentItems = true
                     };
@@ -1039,7 +1039,7 @@ namespace hris_ylid
                                 content = body
                             },
                             toRecipients = new[] { new { emailAddress = new { address = lbEmailCandidate.Text.Trim() } } },
-                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "mirna.dewi@id.yusen-logistics.com" } } }
+                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yovitapaska.adhisetyarini@id.yusen-logistics.com" } } }
                         },
                         saveToSentItems = true
                     };
@@ -1159,7 +1159,7 @@ namespace hris_ylid
                                 content = body
                             },
                             toRecipients = new[] { new { emailAddress = new { address = lbEmailCandidate.Text.Trim() } } },
-                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "mirna.dewi@id.yusen-logistics.com" } } }
+                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yovitapaska.adhisetyarini@id.yusen-logistics.com" } } }
                         },
                         saveToSentItems = true
                     };
@@ -1279,7 +1279,7 @@ namespace hris_ylid
                                 content = body
                             },
                             toRecipients = new[] { new { emailAddress = new { address = lbEmailCandidate.Text.Trim() } } },
-                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "mirna.dewi@id.yusen-logistics.com" } } }
+                            ccRecipients = new[] { new { emailAddress = new { address = "meilva.pohan@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yohanes.adhi@id.yusen-logistics.com" } }, new { emailAddress = new { address = "yovitapaska.adhisetyarini@id.yusen-logistics.com" } } }
                             //toRecipients = new[] { new { emailAddress = new { address = lbEmailCandidate.Text.Trim() } } },
                             //toRecipients = new[] { new { emailAddress = new { address = "widhitech@gmail.com" } } },
                             //ccRecipients = new[] { new { emailAddress = new { address = "widhi.kusuma@id.yusen-logistics.com" } } }

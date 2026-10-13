@@ -247,6 +247,27 @@
             swal('Save Failed!', 'please select user access', 'error');
         }
     </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(".zero-configuration").DataTable(
+                    {
+                        scrollY: "500px",
+                        scrollX: true,
+                        scrollCollapse: true,
+                        paging: true,
+                        columnDefs: [
+                            {
+                                targets: '_all',
+                                render: dateFormatRender
+                            }
+                        ],
+                        //fixedColumns: {
+                        //	left: 2
+                        //}
+
+                    });
+            });
+        </script>
     <style>
         .page-head {
             background-color: #06183d; /* Change this to your desired background color */

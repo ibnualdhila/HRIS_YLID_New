@@ -459,6 +459,27 @@
     <script src="OtherThemes/acorn/scripts/sweetalert.js"></script>
     <script src="OtherThemes/acorn/scripts/sweetalert.min.js"></script>
 </body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".zero-configuration").DataTable(
+                {
+                    scrollY: "500px",
+                    scrollX: true,
+                    scrollCollapse: true,
+                    paging: true,
+                    columnDefs: [
+                        {
+                            targets: '_all',
+                            render: dateFormatRender
+                        }
+                    ],
+                    //fixedColumns: {
+                    //	left: 2
+                    //}
+
+                });
+        });
+    </script>
 <script>
     window.onload = function () {
         $("#btnSubmit").click();

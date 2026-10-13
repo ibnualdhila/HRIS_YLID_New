@@ -87,199 +87,249 @@
         }
 
         /* Styling dropdown "Show entries" */
-    .dataTables_length select {
-        border: 3px solid darkblue !important;
-        background-color: #f0f8ff !important;
-        padding: 4px 8px !important;
-        font-weight: bold !important;
-        height: 32px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+        .dataTables_length select {
+            border: 3px solid darkblue !important;
+            background-color: #f0f8ff !important;
+            padding: 4px 8px !important;
+            font-weight: bold !important;
+            height: 32px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-    /* Efek saat fokus */
-    .dataTables_length select:focus {
-        outline: none;
-        border-color: midnightblue !important;
-        box-shadow: 0 0 5px rgba(0,123,255,0.5);
-    }
-
-
-    .dataTables_filter input,
-    .dataTables_length select {
-        height: 32px;
-    }
+        /* Efek saat fokus */
+        .dataTables_length select:focus {
+            outline: none;
+            border-color: midnightblue !important;
+            box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        }
 
 
-    /* Card container */
-    .upload-card {
-        border: 1px solid #eee;
-        padding: 20px;
-        border-radius: 10px;
-        background: #ffffff;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    /* Legend */
-    .upload-card legend {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 0 10px;
-        color: #06183d;
-    }
-
-    /* Download link */
-    .link-download {
-        color: #06183d;
-        font-weight: 600;
-        text-decoration: none;
-    }
-    .link-download:hover {
-        text-decoration: underline;
-    }
-
-    /* Upload box */
-    .upload-box {
-        display: block;
-        border: 2px dashed #ff6d10;
-        border-radius: 10px;
-        padding: 30px;
-        text-align: center;
-        cursor: pointer;
-        background: #f8fbff;
-        transition: 0.3s;
-    }
-
-    .upload-box:hover {
-        background: #eef6ff;
-        border-color: #0056b3;
-    }
-
-    /* Hide default input */
-    .file-input {
-        display: none;
-    }
-
-    /* Upload content */
-    .upload-content i {
-        font-size: 40px;
-        color: #06183d;
-        margin-bottom: 10px;
-    }
-
-    .upload-content p {
-        margin: 5px 0;
-        font-weight: 500;
-    }
-
-    .file-name {
-        font-size: 13px;
-        color: #666;
-    }
-
-    /* Button */
-    .btn-upload {
-        margin-top: 20px;
-        background: linear-gradient(135deg, #06183d, #0a58ca);
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .btn-upload:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    /* Message */
-    .upload-message {
-        display: block;
-        margin-top: 10px;
-        font-size: 14px;
-    }
-
-    .excel-icon {
-        color: #06183d; /* biru modern */
-        font-size: 20px;
-        margin-right: 8px;
-    }
-    .file-error{
-        color:red;
-    }
-
-    .upload-box.dragover {
-        border-color: #0d6efd;
-        background-color: #eef6ff;
-    }
-
-    .filters input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-        border: 3px solid #ff6d10 !important;
-        background-color: #f0f8ff !important;
-        font-weight: bold !important;
-    }
-
-    table.dataTable thead .filters th {
-        padding: 4px;
-    }
+        .dataTables_filter input,
+        .dataTables_length select {
+            height: 32px;
+        }
 
 
-    /* TANGGAL FILTER */
-    div.dataTables_length {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
+        /* Card container */
+        .upload-card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
 
-    .join-filter-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-left: auto;
-    }
+        /* Legend */
+        .upload-card legend {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 0 10px;
+            color: #06183d;
+        }
 
-    .join-filter-input {
-        width: 160px !important;
-        border-radius: 8px;
-        border: 3px solid darkblue !important;
-        background-color: #f0f8ff !important;
-    }
+        /* Download link */
+        .link-download {
+            color: #06183d;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .link-download:hover {
+            text-decoration: underline;
+        }
 
-    .join-filter-input:focus {
-        border-color: #06183d;
-        box-shadow: 0 0 0 0.1rem rgba(6,24,61,.15);
-    }
+        /* Upload box */
+        .upload-box {
+            display: block;
+            border: 2px dashed #ff6d10;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8fbff;
+            transition: 0.3s;
+        }
 
-    .filters input {
-        width: 100%;
-        border: 5px solid #ff6a00;
-        padding: 5px 8px;
-        border-radius: 4px;
-        font-size: 13px;
-    }
+        .upload-box:hover {
+            background: #eef6ff;
+            border-color: #0056b3;
+        }
 
-    .btnsecondary{
-        background-color: #06183d;
-        color: white;
+        /* Hide default input */
+        .file-input {
+            display: none;
+        }
 
-    }
+        /* Upload content */
+        .upload-content i {
+            font-size: 40px;
+            color: #06183d;
+            margin-bottom: 10px;
+        }
 
-     .dataTables_scrollBody table {
+        .upload-content p {
+            margin: 5px 0;
+            font-weight: 500;
+        }
+
+        .file-name {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Button */
+        .btn-upload {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #06183d, #0a58ca);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-upload:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Message */
+        .upload-message {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .excel-icon {
+            color: #06183d; /* biru modern */
+            font-size: 20px;
+            margin-right: 8px;
+        }
+        .file-error{
+            color:red;
+        }
+
+        .upload-box.dragover {
+            border-color: #0d6efd;
+            background-color: #eef6ff;
+        }
+
+        .filters input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+            border: 3px solid #ff6d10 !important;
+            background-color: #f0f8ff !important;
+            font-weight: bold !important;
+        }
+        
+        .filters select {
+            width: 110%;
+            padding: 3px;
+            box-sizing: border-box;
+            border: 3px solid #ff6d10 !important;
+            background-color: #f0f8ff !important;
+            font-weight: bold !important;
+        }
+
+
+        table.dataTable thead .filters th {
+            padding: 4px;
+        }
+
+
+        /* TANGGAL FILTER */
+        div.dataTables_length {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .join-filter-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .join-filter-input {
+            width: 160px !important;
+            border-radius: 8px;
+            border: 3px solid darkblue !important;
+            background-color: #f0f8ff !important;
+        }
+
+        .join-filter-input:focus {
+            border-color: #06183d;
+            box-shadow: 0 0 0 0.1rem rgba(6,24,61,.15);
+        }
+
+        .filters input {
+            width: 100%;
+            border: 5px solid #ff6a00;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .filters th:nth-child(2),
+        .filters td:nth-child(2),
+        #<%= TableEmployees.ClientID %> th:nth-child(2),
+        #<%= TableEmployees.ClientID %> td:nth-child(2) {
+            min-width: 100px;
+        }
+       .filters select {
+            width: 100%;
+            border: 5px solid #ff6a00;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            height: 33px !important;
+        }
+
+        .btnsecondary{
+            background-color: #06183d;
+            color: white;
+
+        }
+
+        .dataTables_scrollBody table {
             position: relative;
             z-index: 1;
         }
 
-    .dataTables_scrollHead {
-        z-index: 0 !important;
+        .dataTables_scrollHead {
+            z-index: 0 !important;
+        }
+
+    .category-filter-btn {
+        width: 80%; border: 3px solid #ff6d10 !important; background: #f0f8ff;
+        font-weight: bold; padding: 5px 8px; cursor: pointer; text-align: left;
+        border-radius: 4px; height: 22px !important;
     }
+    .category-filter-dropdown {
+        position: absolute;
+        background: #fff;
+        border: 1px solid #ccc;
+        max-height: 220px;
+        overflow-y: auto;
+        min-width: 180px;
+        box-shadow: 0 2px 6px rgba(0,0,0,.2);
+        z-index: 99999;
+    }
+    .category-filter-dropdown label {
+        display: block; padding: 4px 8px; font-weight: normal; white-space: nowrap;
+    }
+    .category-filter-dropdown label:hover { background: #f0f8ff; }
+    .category-filter-dropdown .cf-actions {
+        padding: 4px 8px; border-top: 1px solid #eee; display: flex; justify-content: space-between;
+    }
+    .category-filter-dropdown .cf-actions a { cursor: pointer; color: #06183d; font-weight: bold; }
+
 
     </style>
     <script>
@@ -2714,11 +2764,7 @@
     <script src="./plugins/moment/moment.js"></script>
     <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
-    <%--<script>
-		$(document).ready(function () {
-			$(".datepicker1").bootstrapMaterialDatePicker({ format: 'MM/DD/YYYY', time: false, autoclose: true, todayBtn: 'linked' })
-		});
-	</script>--%>
+
 
     <script>
         $(document).ready(function () {
@@ -2727,77 +2773,71 @@
     </script>
 
    
-<%--    <script>
-        $(document).ready(function () {
-
-            var tableId = '#<%= TableEmployees.ClientID %>';
-
-        // clone header filter
-        $(tableId + ' thead tr')
-            .clone(true)
-            .addClass('filters')
-            .appendTo(tableId + ' thead');
-
-        // init datatable
-        var table = $(tableId).DataTable({
-
-           
-            dom: 'ltip',
-            scrollY: "500px",
-            scrollX: true,
-            scrollCollapse: true,
-            paging: true,
-            autoWidth: false,
-
-            orderCellsTop: true,
-            fixedHeader: true,
-
-            initComplete: function () {
-
-                var api = this.api();
-
-                api.columns().eq(0).each(function (colIdx) {
-
-                    // skip kolom Action
-                    if (colIdx == 0) {
-                        $('.filters th').eq(colIdx).html('');
-                        return;
-                    }
-
-                    var cell = $('.filters th').eq(colIdx);
-
-                    $(cell).html(
-                        '<input type="text" placeholder="Search" style="width:100%;" />'
-                    );
-
-                    $('input', cell)
-                        .off('keyup change')
-                        .on('keyup change', function (e) {
-
-                            e.stopPropagation();
-
-                            api.column(colIdx)
-                                .search(this.value)
-                                .draw();
-                        });
-                });
-
-
-            }
-        });
-
-    });
-    </script>--%>
-
 
     <script>
         $(document).ready(function () {
 
-            var tableId = '#<%= TableEmployees.ClientID %>';
+        var tableId = '#<%= TableEmployees.ClientID %>';
 
         // CLONE HEADER FILTER
         $(tableId + ' thead tr').clone().addClass('filters').appendTo(tableId + ' thead');
+            //var monthNames = [
+            //    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            //    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+            //];
 
+            function formatDateDisplay(value) {
+                if (!value) return value;
+
+                var trimmed = value.trim();
+                var spaceIdx = trimmed.indexOf(' ');
+                var datePart = spaceIdx > -1 ? trimmed.substring(0, spaceIdx) : trimmed;
+                var timePart = spaceIdx > -1 ? trimmed.substring(spaceIdx + 1) : '';
+
+                var segs = datePart.split('/');
+                if (segs.length < 3) return value;
+
+                var year, month, day;
+
+                if (segs[0].length === 4) {
+                    // format yyyy/mm/dd
+                    year = parseInt(segs[0], 10);
+                    month = parseInt(segs[1], 10);
+                    day = parseInt(segs[2], 10);
+                } else if (segs[2].length === 4) {
+                    // format dd/mm/yyyy
+                    day = parseInt(segs[0], 10);
+                    month = parseInt(segs[1], 10);
+                    year = parseInt(segs[2], 10);
+                } else {
+                    return value; // format tidak dikenali
+                }
+
+                if (month < 1 || month > 12) return value;
+
+                var result = day + ' ' + monthNames[month - 1] + ' ' + year;
+                if (timePart) result += ' ' + timePart;
+
+                return result;
+            }
+
+            // helper: ubah "yyyy/mm/dd" jadi "23 April 1982" pakai Intl (tanpa hardcode nama bulan)
+            //function formatDateDisplay(value) {
+            //    if (!value) return value;
+
+            //    var parts = value.split('/');
+            //    if (parts.length < 3) return value;
+
+            //    var year = parts[0], month = parts[1], day = parts[2];
+            //    if (year.length !== 4) return value;
+
+            //    var dateObj = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+            //    if (isNaN(dateObj.getTime())) return value;
+
+            //    var monthName = dateObj.toLocaleString('id-ID', { month: 'long' });
+
+            //    return parseInt(day, 10) + ' ' + monthName + ' ' + year;
+            //}
         // INIT DATATABLE
         var table = $(tableId).DataTable({
 
@@ -2811,22 +2851,126 @@
             deferRender: true,
             orderCellsTop: true,
             fixedHeader: false,
-
+            //columnDefs: [
+            //    {
+            //        // sesuaikan index sesuai kolom tanggal di tabel kamu:
+            //        // 5 = Date of Birth, 13 = Join Date, 15 = Retirement Date,
+            //        // 17 = Contract Start Date, 18 = Contract End Date,
+            //        // 20 = Creation Date, 22 = Modification Date
+            //        targets: [5, 13, 15, 17, 18, 20, 22],
+            //        render: function (data, type, row) {
+            //            if (type === 'display') {
+            //                return formatDateDisplay(data);
+            //            }
+            //            return data; // untuk 'filter', 'sort', 'type' pakai data asli
+            //        }
+            //    }
+            //],
+            columnDefs: [
+                {
+                    targets: '_all',
+                    render: dateFormatRender
+                }
+            ],
             initComplete: function () {
 
                 var api = this.api();
 
-                // SEARCH PER COLUMN
+                //// SEARCH PER COLUMN
                 api.columns().eq(0).each(function (colIdx) {
-
-                    // SKIP ACTION COLUMN
-                    if (colIdx == 0) {
-                        $('.filters th').eq(colIdx).html('');
-                        return;
-                    }
 
                     var cell = $('.filters th').eq(colIdx);
 
+                    // ACTION COLUMN
+                    if (colIdx == 0) {
+                        $(cell).html('');
+                        return;
+                    }
+
+                    // STATUS COLUMN
+                    if (colIdx == 1) {
+
+                        $(cell).html(`
+                            <select class="column-status form-control form-control-sm">
+                                <option value="">ALL</option>
+                                <option value="ACTIVE">ACTIVE</option>
+                                <option value="NON ACTIVE">NON ACTIVE</option>
+                            </select>
+                        `);
+
+                        $('select', cell)
+                            .off('change')
+                            .on('change', function () {
+
+                                api.column(colIdx)
+                                    .search(
+                                        this.value ? '^' + this.value + '$' : '',
+                                        true,
+                                        false
+                                    )
+                                    .draw();
+                            });
+
+                        return;
+                    }
+
+
+                   
+                    // KOLOM CATEGORY -> multi-select filter
+                    if (colIdx == 2) {
+
+                        var uniqueValues = api.column(colIdx).data().unique().sort();
+
+                        var btnHtml = '<button type="button" class="category-filter-btn">Category ▾</button>';
+                        $(cell).html(btnHtml);
+
+                        var ddHtml = '<div class="category-filter-dropdown">';
+                        uniqueValues.each(function (val) {
+                            if (val !== '' && val !== null && typeof val !== 'undefined') {
+                                ddHtml += '<label><input type="checkbox" class="cf-checkbox" value="' + val + '" checked> ' + val + '</label>';
+                            }
+                        });
+                        ddHtml += '<div class="cf-actions"><a class="cf-all">All</a><a class="cf-none">Clear</a></div></div>';
+
+                        // taruh dropdown di body, bukan di dalam th
+                        var $dropdown = $(ddHtml).appendTo('body').hide();
+
+                        var $btn = $(cell).find('.category-filter-btn');
+
+                        $btn.on('click', function (e) {
+                            e.stopPropagation();
+
+                            // hitung posisi tombol lalu posisikan dropdown persis di bawahnya
+                            var offset = $btn.offset();
+                            $dropdown.css({
+                                position: 'absolute',
+                                top: offset.top + $btn.outerHeight(),
+                                left: offset.left,
+                                zIndex: 99999
+                            });
+
+                            $('.category-filter-dropdown').not($dropdown).hide();
+                            $dropdown.toggle();
+                        });
+
+                        $(document).on('click', function () { $dropdown.hide(); });
+                        $dropdown.on('click', function (e) { e.stopPropagation(); });
+
+                        $dropdown.find('.cf-all').on('click', function () {
+                            $dropdown.find('.cf-checkbox').prop('checked', true).trigger('change');
+                        });
+                        $dropdown.find('.cf-none').on('click', function () {
+                            $dropdown.find('.cf-checkbox').prop('checked', false).trigger('change');
+                        });
+
+                        $dropdown.on('change', '.cf-checkbox', function () {
+                            table.draw();
+                        });
+
+                        return;
+                    }
+
+                    // DEFAULT TEXT SEARCH
                     $(cell).html(
                         '<input type="text" placeholder="Search" class="column-search" />'
                     );
@@ -2876,62 +3020,71 @@
             }
         });
 
-        // FILTER RANGE DATE
-         $.fn.dataTable.ext.search.push(
+            // FILTER RANGE DATE
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
 
-            
-             function (settings, data, dataIndex) {
+                    var startDate = $('#startDate').val();
+                    var endDate = $('#endDate').val();
 
-                 debugger
-                var startDate = $('#startDate').val();
+                    // INDEX KOLOM JOIN DATE
+                    var joinDate = data[13];
 
-                var endDate = $('#endDate').val();
+                    if (!joinDate) {
+                        return true;
+                    }
 
-                // INDEX KOLOM JOIN DATE
+                    var parts = joinDate.split('/');
 
-                var joinDate = data[13];
+                    if (parts.length < 3) {
+                        return true;
+                    }
 
-                if (!joinDate) {
-                    return true;
-                 }
-                
-                var parts = joinDate.split('/');
+                    var tableDate = new Date(
+                        parseInt(parts[0]),
+                        parseInt(parts[1]) - 1,
+                        parseInt(parts[2])
+                    );
 
-                if (parts.length < 3) {
+                    tableDate.setHours(0, 0, 0, 0);
+
+                    if (startDate) {
+                        var minDate = new Date(startDate);
+                        minDate.setHours(0, 0, 0, 0);
+                        if (tableDate < minDate) {
+                            return false;
+                        }
+                    }
+
+                    if (endDate) {
+                        var maxDate = new Date(endDate);
+                        maxDate.setHours(0, 0, 0, 0);
+                        if (tableDate > maxDate) {
+                            return false;
+                        }
+                    }
+
                     return true;
                 }
+            );
 
-                 var tableDate = new Date(
-                     parseInt(parts[0]),
-                     parseInt(parts[1]) - 1,
-                     parseInt(parts[2])
-                 );
+            // FILTER CATEGORY (multi-select)
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
 
-                 tableDate.setHours(0, 0, 0, 0);
+                    var $checkboxes = $('.category-filter-dropdown .cf-checkbox');
+                    if ($checkboxes.length === 0) return true;
 
-                 if (startDate) {
+                    var checkedValues = $checkboxes.filter(':checked').map(function () {
+                        return $(this).val();
+                    }).get();
 
-                     var minDate = new Date(startDate);
-                     minDate.setHours(0, 0, 0, 0);
+                    if (checkedValues.length === $checkboxes.length) return true;
 
-                     if (tableDate < minDate) {
-                         return false;
-                     }
-                 }
-
-                 if (endDate) {
-
-                     var maxDate = new Date(endDate);
-                     maxDate.setHours(0, 0, 0, 0);
-
-                     if (tableDate > maxDate) {
-                         return false;
-                     }
-                 }
-                return true;
-            }
-        );
-
+                    var categoryValue = data[2]; // sesuaikan index kolom Category
+                    return checkedValues.indexOf(categoryValue) !== -1;
+                }
+            );
       
         $(document).on('change', '#startDate, #endDate', function () {
             table.draw();
@@ -2997,38 +3150,13 @@
         });
 
 
-        //$(document).ready(function () {
-        //    initEmergencyContactDataTable();
-
-        //    // If using UpdatePanel, re-init DataTable after partial postback
-        //    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-        //        initEmergencyContactDataTable();
-
-        //        // Initialize DataTable for TableEditCareerHistory if not already initialized
-        //        if (!$.fn.DataTable.isDataTable('#TableEditCareerHistory')) {
-        //            $('#TableEditCareerHistory').DataTable({
-        //                scrollX: true,
-        //                scrollCollapse: true,
-        //                responsive: true,
-        //                paging: true
-        //            });
-        //        }
-
-        //    });
-        //});
-
+  
         // Adjust DataTables columns when the modal is shown
         $('#mdlTableDetailEmployee').on('shown.bs.modal', function () {
             $('.grid').DataTable().columns.adjust();
         });
 
-        //$(document).ready(function () {
-        //    $('#TableEditEmergencyContact').DataTable({
-        //        paging: true,
-        //        searching: false,
-        //        info: false
-        //    });
-        //});
+  
     </script>
 
     <script type="text/javascript">
@@ -3106,75 +3234,6 @@
         });
     </script>
 
-    <script type="text/javascript">
-        // List of category options
- <%--       var categoryOptions = ["",
-            "Promotion",
-            "Mutation",
-            "Rotation",
-            "Demotion",
-        ];
-
-        // Make Category column editable with dropdowns
-        function makeCategoryEditable() {
-            $('#<%= TableEditCareerHistory.ClientID %> tr').each(function () {
-                var $cells = $(this).find('td');
-                // Category column is index 6 (0-based)
-                if ($cells.length > 0) {
-                    var $categoryCell = $cells.eq(6);
-                    // Avoid header/footer rows
-                    if ($categoryCell.length && !$categoryCell.hasClass('category-editable')) {
-                        var currentValue = $categoryCell.text().trim();
-                        //var selectHtml = '<select class="form-control category-editor">';
-                        var selectHtml = '<select class="form-control category-editor" style="width:140px;">';
-                        categoryOptions.forEach(function (opt) {
-                            selectHtml += '<option value="' + opt + '"' + (opt === currentValue ? ' selected' : '') + '>' + opt + '</option>';
-                        });
-                        selectHtml += '</select>';
-                        $categoryCell.html(selectHtml);
-                        $categoryCell.addClass('category-editable');
-                    }
-                }
-            });
-        }
-
-        // Call when the tab/modal is shown
-        $(document).ready(function () {
-            $('#myTab2 a[href="#tabCareerHistory"]').on('shown.bs.tab', function () {
-                makeCategoryEditable();
-            });
-            // If the tab is already active on page load
-            if ($('#tabCareerHistory').hasClass('active')) {
-                makeCategoryEditable();
-            }
-        });--%>
-    </script>
-
-    <%--    <script type="text/javascript">
-        function collectCareerHistoryData() {
-            var careerHistory = [];
-            $('#TableEditCareerHistory tbody tr').each(function () {
-                var id = $(this).find('.id').text().trim(); // or .val() if input
-                var nik = $(this).find('.nik').text().trim();
-                var category = $(this).find('.category').text().trim();
-                if (id) {
-                    careerHistory.push({
-                        id: id,
-                        nik: nik,
-                        category: category
-                    });
-                }
-            });
-            $('#<%= hfCareerHistoryData.ClientID %>').val(JSON.stringify(careerHistory));
-        }
-
-        // Attach to btnUpdate
-        $(document).ready(function () {
-            $('#<%= btnUpdate.ClientID %>').on('click', function () {
-                collectCareerHistoryData();
-            });
-        });
-    </script>--%>
 
     <script type="text/javascript">
         function addEmergencyContactRow() {
@@ -3366,39 +3425,11 @@
             });
 
             document.getElementById('<%= hfCareerHistoryData.ClientID %>').value = JSON.stringify(allData);
-<%--            var dt = $('#TableEditCareerHistory').DataTable();
-            var allData = [];
 
-            dt.rows().every(function () {
-                var row = $(this.node());
-                var dataItem = {
-                    id: row.attr("data-id"),/*row.find("td:eq(0)").text().trim(),*/
-                    nik: row.find("td:eq(0)").text().trim(),
-                    FullName: row.find("td:eq(1)").text().trim(),
-                    Title: row.find("td:eq(2)").text().trim(),
-                    Division: row.find("td:eq(3)").text().trim(),
-                    Section: row.find("td:eq(4)").text().trim(),
-                    Location: row.find("td:eq(5)").text().trim(),
-                    Category: row.find("td:eq(6) select").val() || row.find("td:eq(6)").text().trim(),
-                    ModifiedBy: row.find("td:eq(7)").text().trim(),
-                    modification_date: row.find("td:eq(8)").text().trim()
-                };
-                allData.push(dataItem);
-            });
-
-            document.getElementById('<%= hfCareerHistoryData.ClientID %>').value = JSON.stringify(allData);
-
-            console.log(allData);--%>
         }
     </script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // Existing DataTables initialization...
 
-            kini
-        });
-    </script>
         <script type="text/javascript">
             function FuncSave() {
                 // Split the inner text into an array of items based on a newline character
@@ -3423,11 +3454,7 @@
                 showConfirmButton: false,
                 html: true
             },
-                //function redirect() {
-                    /* window.location.href = 'ffis_aff_import_operation.aspx';*/
-                   
-                    //window.location.href = 'employees.aspx';
-                //}
+
             );
             }
         </script>

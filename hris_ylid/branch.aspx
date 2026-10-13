@@ -361,14 +361,20 @@
 					scrollY: "500px",
 					scrollX: true,
 					scrollCollapse: true,
-					paging: true
+					paging: true,
+                    columnDefs: [
+                        {
+                            targets: '_all',
+                            render: dateFormatRender
+                        }
+                    ],
 					//fixedColumns: {
 					//	left: 2
 					//}
 
 				});
 		});
-	</script>
+    </script>
 	<script>
 		$(document).ready(function () {
 			$(".datepicker1").datepicker({ format: 'mm/dd/yyyy', timeFormat: "hh:mm:ss", autoclose: true, todayBtn: 'linked' })
